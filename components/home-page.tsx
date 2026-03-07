@@ -16,14 +16,13 @@ export async function HomePage() {
   return (
     <main>
       <section className="relative overflow-hidden bg-surface">
-        <div className="pointer-events-none absolute inset-0 bg-hero-grid opacity-100" />
         <SiteHeader />
-        <div className="container-shell relative grid gap-12 pb-16 pt-4 lg:grid-cols-[1fr_520px] lg:items-center lg:pb-0">
-          <div className="max-w-[660px] py-4 md:py-12 lg:py-20">
-            <h1 className="max-w-md text-[3rem] font-bold leading-[0.95] tracking-[-0.05em] text-ink sm:text-[4.5rem]">
+        <div className="container-shell relative grid gap-6 pb-16 pt-4 lg:grid-cols-[1fr_520px] lg:items-center lg:gap-10 lg:pb-0">
+          <div className="relative z-30 max-w-[760px] py-4 md:py-10 lg:py-16">
+            <h1 className="max-w-[470px] text-[3.2rem] font-semibold leading-[0.92] tracking-tightish text-ink sm:text-[5.15rem]">
               Discover more than <span className="text-accent">5000+ Jobs</span>
             </h1>
-            <div className="relative mt-3 h-4 w-[250px] sm:w-[310px]">
+            <div className="relative mt-4 h-4 w-[250px] sm:w-[400px]">
               <Image
                 src="/images/hero/underline.png"
                 alt=""
@@ -32,76 +31,82 @@ export async function HomePage() {
                 sizes="310px"
               />
             </div>
-            <p className="mt-8 max-w-md text-base leading-8 text-muted">
+            <p className="mt-7 max-w-[470px] text-[1rem] leading-[1.65] tracking-snug text-muted">
               Great platform for the job seeker that searching for new career heights about startups.
             </p>
-            <form action="/jobs" className="mt-8 max-w-[610px]">
-              <div className="grid min-h-[74px] gap-0 border border-[#e7e8ee] bg-white sm:grid-cols-[1.52fr_1.32fr_0.86fr]">
-                <label className="flex h-[72px] items-center gap-3 border-b border-[#e7e8ee] px-5 text-sm text-muted sm:border-b-0 sm:border-r">
-                  <Search className="h-5 w-5 text-ink" />
-                  <input
-                    name="q"
-                    type="text"
-                    placeholder="Job title or keyword"
-                    className="w-full border-0 bg-transparent text-[14px] font-medium text-ink outline-none placeholder:font-normal placeholder:text-[14px] placeholder:text-[#b3b8c5]"
-                  />
+            <form action="/jobs" className="relative z-40 mt-8 max-w-[1120px] lg:w-[calc(100%+160px)] lg:max-w-none">
+              <div className="grid min-h-[60px] gap-0 border border-[#e7e8ee] bg-white shadow-[0_18px_40px_rgba(31,41,64,0.08)] sm:grid-cols-[1.82fr_1.62fr_1.4fr]">
+                <label className="flex h-[58px] items-center gap-3 border-b border-[#e7e8ee] px-5 text-sm text-muted sm:border-b-0 sm:border-r">
+                  <Search className="h-5 w-5 shrink-0 text-ink" />
+                  <span className="flex w-full flex-col">
+                    <input
+                      name="q"
+                      type="text"
+                      placeholder="Job title or keyword"
+                      className="w-full border-0 bg-transparent pb-2 text-[14px] font-medium tracking-snug text-ink outline-none placeholder:font-medium placeholder:text-[14px] placeholder:tracking-snug placeholder:text-[#969ead] placeholder:opacity-100"
+                    />
+                    <span className="block h-px w-full bg-[#dfe3ec]" />
+                  </span>
                 </label>
-                <label className="relative flex h-[72px] items-center gap-3 border-b border-[#e7e8ee] px-5 text-sm text-ink sm:border-b-0 sm:border-r">
+                <label className="relative flex h-[58px] items-center gap-3 border-b border-[#e7e8ee] px-5 text-sm text-ink sm:border-b-0 sm:border-r">
                   <MapPin className="h-5 w-5 shrink-0 text-ink" />
-                  <select
-                    name="location"
-                    defaultValue="Florence, Italy"
-                    className="w-full appearance-none border-0 bg-transparent pr-8 text-[14px] font-medium text-ink outline-none"
-                  >
-                    <option>Florence, Italy</option>
-                    <option>Paris, France</option>
-                    <option>San Francisco, USA</option>
-                    <option>Hamburg, Germany</option>
-                    <option>Lucern, Switzerland</option>
-                    <option>Ontario, Canada</option>
-                  </select>
+                  <span className="flex w-full flex-col">
+                    <select
+                      name="location"
+                      defaultValue="Florence, Italy"
+                      className="w-full appearance-none border-0 bg-transparent pb-2 pr-8 text-[14px] font-medium tracking-snug text-ink outline-none"
+                    >
+                      <option>Florence, Italy</option>
+                      <option>Paris, France</option>
+                      <option>San Francisco, USA</option>
+                      <option>Hamburg, Germany</option>
+                      <option>Lucern, Switzerland</option>
+                      <option>Ontario, Canada</option>
+                    </select>
+                    <span className="block h-px w-full bg-[#dfe3ec]" />
+                  </span>
                   <ChevronDown className="pointer-events-none absolute right-5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#9aa0ae]" />
                 </label>
-                <div className="flex items-center p-[10px]">
+                <div className="flex items-center p-[8px]">
                   <button
                     type="submit"
-                    className="flex h-[52px] w-full items-center justify-center bg-brand px-6 text-[14px] font-semibold leading-[1.15] text-white"
+                    className="flex h-[42px] w-full items-center justify-center whitespace-nowrap bg-brand px-10 text-[14px] font-semibold tracking-snug leading-none text-white"
                   >
                     Search my job
                   </button>
                 </div>
               </div>
             </form>
-            <p className="mt-4 text-sm text-muted">
+            <p className="mt-4 text-[14px] tracking-snug text-muted">
               Popular: UI Designer, UX Researcher, Android, Admin
             </p>
           </div>
-          <div className="relative mx-auto w-full max-w-[520px] self-end">
-            <div className="pointer-events-none absolute right-[-14%] top-[2%] hidden h-[78%] w-[150%] lg:block">
+          <div className="relative z-10 mx-auto w-full max-w-[520px] self-end overflow-hidden lg:-ml-2">
+            <div className="pointer-events-none absolute right-[-2%] top-[4%] hidden h-[72%] w-[108%] lg:block">
               <Image
                 src="/images/hero/shape-lines.png"
                 alt=""
                 fill
-                className="object-contain object-center"
-                sizes="800px"
+                className="object-contain object-right"
+                sizes="560px"
               />
             </div>
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 sm:h-32">
+            <div className="pointer-events-none absolute bottom-0 right-0 z-20 h-[132px] w-[74%] sm:h-[168px]">
               <Image
                 src="/images/hero/bottom-slope.png"
                 alt=""
                 fill
-                className="object-fill object-bottom"
+                className="object-contain object-right-bottom"
                 sizes="520px"
               />
             </div>
-            <div className="relative mx-auto h-[420px] w-[280px] sm:h-[560px] sm:w-[390px]">
+            <div className="relative z-10 mx-auto hidden h-[430px] w-[286px] sm:h-[590px] sm:w-[408px] lg:ml-2 lg:-mb-4 lg:block">
               <Image
                 src="/images/hero/person.png"
                 alt="Confident job seeker"
                 fill
                 className="object-contain object-bottom"
-                sizes="(max-width: 768px) 280px, 390px"
+                sizes="(max-width: 768px) 286px, 408px"
                 priority
               />
             </div>
@@ -149,10 +154,12 @@ export async function HomePage() {
         <div className="overflow-hidden bg-brand text-white">
           <div className="grid gap-8 px-8 py-10 lg:grid-cols-[1fr_1.25fr] lg:px-12">
             <div className="self-center">
-              <h2 className="max-w-xs text-4xl font-bold leading-tight tracking-[-0.04em]">
+              <h2 className="max-w-xs text-4xl font-semibold leading-tight tracking-[-0.025em]">
                 Start posting jobs today
               </h2>
-              <p className="mt-5 text-sm text-white/80">Start posting jobs for only $10.</p>
+              <p className="mt-5 text-[0.95rem] font-normal tracking-[-0.01em] text-white/80">
+                Start posting jobs for only $10.
+              </p>
               <Link
                 href="/admin"
                 className="mt-8 inline-block bg-white px-5 py-3 text-sm font-semibold text-brand"
@@ -225,7 +232,6 @@ export async function HomePage() {
       </section>
 
       <section className="relative overflow-hidden py-8 sm:py-16">
-        <div className="pointer-events-none absolute inset-0 bg-hero-grid opacity-60" />
         <div className="container-shell relative">
           <div className="flex items-center justify-between gap-6">
             <h2 className="section-title">

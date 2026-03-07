@@ -210,7 +210,7 @@ const seedJobs: Omit<Job, "id" | "createdAt">[] = [
 export const categories: { name: JobCategory; jobsAvailable: number; highlighted?: boolean }[] = [
   { name: "Design", jobsAvailable: 235 },
   { name: "Sales", jobsAvailable: 756 },
-  { name: "Marketing", jobsAvailable: 140, highlighted: true },
+  { name: "Marketing", jobsAvailable: 140 },
   { name: "Finance", jobsAvailable: 325 },
   { name: "Technology", jobsAvailable: 436 },
   { name: "Engineering", jobsAvailable: 542 },

@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
           <div className="space-y-5">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <LogoMark />
+              <LogoMark src="/images/footer/logo.png" />
             </Link>
             <p className="max-w-xs text-sm leading-7 text-white/65">
               Great platform for the job seeker that passionate about startups.

@@ -19,8 +19,8 @@ export function LatestJobRow({ job }: { job: Job }) {
         </div>
       )}
       <div className="flex-1">
-        <h3 className="text-xl font-semibold">{job.title}</h3>
-        <p className="mt-1 text-sm text-muted">
+        <h3 className="text-[1.05rem] font-medium tracking-[-0.015em]">{job.title}</h3>
+        <p className="mt-1 text-[0.84rem] font-normal tracking-[-0.005em] text-muted">
           {job.company} • {job.location}
         </p>
         <div className="mt-3 flex flex-wrap gap-2">

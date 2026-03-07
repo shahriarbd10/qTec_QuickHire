@@ -19,16 +19,18 @@ export function JobCard({ job }: { job: Job }) {
             {job.logoText}
           </div>
         )}
-        <span className="rounded-sm border border-brand px-3 py-1 text-xs font-medium text-brand">
+        <span className="rounded-sm border border-brand px-3 py-1 text-xs font-medium tracking-normal text-brand">
           {job.type}
         </span>
       </div>
       <div className="mt-5">
-        <h3 className="text-lg font-semibold">{job.title}</h3>
-        <p className="mt-1 text-sm text-muted">
+        <h3 className="text-[1rem] font-medium tracking-[-0.015em]">{job.title}</h3>
+        <p className="mt-1 text-[0.84rem] font-normal tracking-[-0.005em] text-muted">
           {job.company} • {job.location}
         </p>
-        <p className="mt-5 line-clamp-3 text-sm leading-7 text-muted">{job.summary}</p>
+        <p className="mt-5 line-clamp-3 text-[0.84rem] font-normal leading-6 tracking-[-0.005em] text-muted">
+          {job.summary}
+        </p>
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
         <span className="pill bg-[#e8faf0] text-[#5fbf86]">Full-Time</span>

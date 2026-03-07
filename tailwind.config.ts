@@ -21,7 +21,12 @@ const config: Config = {
         card: "0 20px 45px rgba(31, 41, 64, 0.08)",
       },
       fontFamily: {
-        sans: ["Arial", "Helvetica", "sans-serif"],
+        sans: ["Clash Display", "Arial", "Helvetica", "sans-serif"],
+      },
+      letterSpacing: {
+        tighter: "-0.04em",
+        tightish: "-0.02em",
+        snug: "-0.01em",
       },
       backgroundImage: {
         "hero-grid":
