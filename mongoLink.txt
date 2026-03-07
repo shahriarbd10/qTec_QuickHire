@@ -1,0 +1,1 @@
+mongodb+srv://shahriarsgr_db_user:BSYacRSJSGisDCbp@qtechjobstation.y8r68yf.mongodb.net/?appName=qtechJobStation
