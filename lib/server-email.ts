@@ -76,6 +76,30 @@ export async function sendEmailVerificationOtpEmail(email: string, name: string,
   });
 }
 
+export async function sendRegistrationGreetingEmail(email: string, name: string, company: string) {
+  const html = buildEmailShell(
+    "Welcome to QuickHire",
+    `
+      <p style="margin:0 0 16px">Hi ${name || "there"},</p>
+      <p style="margin:0 0 16px">
+        Thanks for creating your QuickHire admin account for ${company || "your company"}.
+      </p>
+      <p style="margin:0 0 16px">
+        We have sent you a 6-digit verification code in a separate email. Once you confirm it, you can start posting jobs, managing applications, and updating your company presence from the dashboard.
+      </p>
+      <p style="margin:0">
+        QuickHire is ready when you are.
+      </p>
+    `,
+  );
+
+  await sendMail({
+    to: email,
+    subject: "Welcome to QuickHire",
+    html,
+  });
+}
+
 export async function sendWelcomeEmail(email: string, name: string, dashboardUrl: string) {
   const html = buildEmailShell(
     "Welcome to QuickHire",
@@ -93,6 +117,30 @@ export async function sendWelcomeEmail(email: string, name: string, dashboardUrl
   await sendMail({
     to: email,
     subject: "Welcome to QuickHire",
+    html,
+  });
+}
+
+export async function sendPasswordResetOtpEmail(email: string, name: string, otp: string) {
+  const html = buildEmailShell(
+    "Reset your password",
+    `
+      <p style="margin:0 0 16px">Hi ${name || "there"},</p>
+      <p style="margin:0 0 16px">
+        Use the 6-digit code below to reset your QuickHire password.
+      </p>
+      <div style="margin:28px 0;padding:18px 20px;border-radius:22px;background:#f4f7fb;border:1px solid #dbe4ec;text-align:center">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#7f5c31;margin-bottom:10px">Reset code</div>
+        <div style="font-size:34px;line-height:1;font-weight:800;letter-spacing:0.28em;color:#1f2940">${otp}</div>
+      </div>
+      <p style="margin:0 0 12px">This code will expire in 10 minutes.</p>
+      <p style="margin:0">If you did not request a password reset, you can ignore this email.</p>
+    `,
+  );
+
+  await sendMail({
+    to: email,
+    subject: "QuickHire password reset code",
     html,
   });
 }

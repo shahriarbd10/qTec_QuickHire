@@ -7,11 +7,6 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
-    const user = await requireCurrentUser();
-    if (!user) {
-      return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
-    }
-
     const { id } = await params;
     const job = await getJobById(id);
 
@@ -33,8 +28,19 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> },
 ) {
   try {
+    const user = await requireCurrentUser();
+    if (!user) {
+      return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
+    }
+    if (!user.companyId) {
+      return NextResponse.json({ error: "Admin company is not configured." }, { status: 400 });
+    }
+    if (user.role !== "admin") {
+      return NextResponse.json({ error: "Not authorized." }, { status: 403 });
+    }
+
     const { id } = await params;
-    const removed = await deleteJob(id);
+    const removed = await deleteJob(id, user.companyId);
 
     if (!removed) {
       return NextResponse.json({ error: "Job not found." }, { status: 404 });

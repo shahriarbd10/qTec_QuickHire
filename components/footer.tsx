@@ -7,10 +7,11 @@ const footerLinkClass =
 
 export function Footer() {
   return (
-    <footer className="bg-[#202430] text-white">
-      <div className="container-shell pt-16 lg:min-h-[497px] lg:pt-16">
-        <div className="grid gap-12 lg:grid-cols-[376px_105px_97px_362px] lg:gap-[88px]">
-          <div>
+    <footer className="bg-white text-white">
+      <div className="mx-auto max-w-[1240px] bg-[#202430]">
+        <div className="px-5 pt-16 sm:px-8 lg:min-h-[497px] lg:px-[72px] lg:pt-16">
+        <div className="grid gap-12 lg:grid-cols-[376px_105px_97px_362px] lg:gap-0 lg:[grid-template-areas:'left_about_resources_right'] lg:[grid-template-columns:376px_105px_97px_362px] lg:justify-between">
+          <div className="lg:[grid-area:left]">
             <Link href="/" className="inline-flex items-center">
               <LogoMark src="/images/footer/logo.png" />
             </Link>
@@ -23,7 +24,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div>
+          <div className="lg:[grid-area:about] lg:pl-[12px]">
             <h3
               className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
               style={{ fontFamily: '"Epilogue", sans-serif' }}
@@ -52,7 +53,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="lg:[grid-area:resources] lg:pl-[20px]">
             <h3
               className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
               style={{ fontFamily: '"Epilogue", sans-serif' }}
@@ -78,7 +79,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div>
+          <div className="lg:[grid-area:right]">
             <h3
               className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
               style={{ fontFamily: '"Epilogue", sans-serif' }}
@@ -91,7 +92,7 @@ export function Footer() {
             >
               The latest job news, articles, sent to your inbox weekly.
             </p>
-            <div className="mt-10 flex flex-col gap-2 sm:flex-row">
+            <div className="mt-10 flex flex-col gap-2 sm:flex-row sm:gap-2">
               <input
                 className="h-[50px] w-full border border-[#d6ddeb] bg-white px-4 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-[#a8adb7] sm:w-[223px]"
                 placeholder="Email Address"
@@ -107,7 +108,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 border-t-2 border-white/10 pt-10 pb-10">
+        <div className="mt-20 border-t-2 border-white/10 pb-10 pt-10">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <p
               className="text-[16px] font-medium leading-[1.6] tracking-normal text-white/50"
@@ -115,8 +116,8 @@ export function Footer() {
             >
               2021 @ QuickHire. All rights reserved.
             </p>
-            <div className="flex items-center gap-6">
-              {[Facebook, Instagram, Twitter, Linkedin].map((Icon, index) => (
+            <div className="flex items-center gap-6 lg:gap-[24px]">
+              {[Facebook, Instagram, Linkedin, Twitter].map((Icon, index) => (
                 <span
                   key={index}
                   className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white"
@@ -127,6 +128,7 @@ export function Footer() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );

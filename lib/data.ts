@@ -2,9 +2,12 @@ import { connectToDatabase } from "@/lib/db";
 import { Application, Job, JobCategory } from "@/lib/types";
 import { JobModel } from "@/models/job";
 import { ApplicationModel } from "@/models/application";
+import { CompanyModel } from "@/models/company";
+import { slugifyCompanyName } from "@/lib/company";
 
 type DatabaseJob = {
   _id: { toString(): string };
+  companyId?: { toString(): string };
   title: string;
   company: string;
   location: string;
@@ -18,6 +21,7 @@ type DatabaseJob = {
   featured?: boolean;
   latest?: boolean;
   color: string;
+  createdByUserId?: { toString(): string };
   createdAt: Date;
 };
 
@@ -237,6 +241,7 @@ function getSeededLocalJobs(): Job[] {
 function serializeJob(job: DatabaseJob): Job {
   return {
     id: job._id.toString(),
+    companyId: job.companyId?.toString() || "",
     title: job.title,
     company: job.company,
     location: job.location,
@@ -259,7 +264,26 @@ export async function ensureSeedJobs() {
   const count = await JobModel.countDocuments();
 
   if (count === 0) {
-    await JobModel.insertMany(seedJobs);
+    const seededCompanies = await Promise.all(
+      Array.from(new Set(seedJobs.map((job) => job.company))).map(async (companyName) => {
+        const slug = slugifyCompanyName(companyName);
+        const company = await CompanyModel.findOneAndUpdate(
+          { slug },
+          { name: companyName, slug },
+          { new: true, upsert: true, setDefaultsOnInsert: true },
+        );
+
+        return [companyName, String(company._id)] as const;
+      }),
+    );
+
+    const companyIdMap = new Map(seededCompanies);
+    await JobModel.insertMany(
+      seedJobs.map((job) => ({
+        ...job,
+        companyId: companyIdMap.get(job.company),
+      })),
+    );
   }
 }
 
@@ -283,22 +307,37 @@ export async function getJobById(id: string) {
   }
 }
 
+export async function getJobsByCompanyId(companyId: string) {
+  try {
+    await ensureSeedJobs();
+    const jobs = (await JobModel.find({ companyId }).sort({ createdAt: -1 }).lean()) as DatabaseJob[];
+    return jobs.map((job) => serializeJob(job));
+  } catch {
+    return [];
+  }
+}
+
 export async function addJob(
-  job: Omit<Job, "id" | "createdAt">,
+  job: Omit<Job, "id" | "createdAt"> & { companyId: string; createdByUserId?: string },
 ): Promise<Job> {
   await ensureSeedJobs();
   const created = await JobModel.create(job);
   return serializeJob(created.toObject() as DatabaseJob);
 }
 
-export async function deleteJob(id: string) {
+export async function deleteJob(id: string, companyId?: string) {
   await ensureSeedJobs();
-  const removed = (await JobModel.findByIdAndDelete(id).lean()) as DatabaseJob | null;
+  const removed = (await JobModel.findOneAndDelete(
+    companyId ? { _id: id, companyId } : { _id: id },
+  ).lean()) as DatabaseJob | null;
+  if (removed) {
+    await ApplicationModel.deleteMany({ jobId: removed._id });
+  }
   return removed ? serializeJob(removed) : null;
 }
 
 export async function addApplication(
-  application: Omit<Application, "id" | "createdAt">,
+  application: Omit<Application, "id" | "createdAt"> & { companyId: string },
 ) {
   await connectToDatabase();
   const created = await ApplicationModel.create({
@@ -309,10 +348,34 @@ export async function addApplication(
   return {
     id: created._id.toString(),
     jobId: created.jobId.toString(),
+    companyId: created.companyId.toString(),
     name: created.name,
     email: created.email,
     resumeLink: created.resumeLink,
     coverNote: created.coverNote,
     createdAt: created.createdAt.toISOString(),
   };
+}
+
+export async function ensureCompanyForAdmin(input: {
+  companyName: string;
+  location?: string;
+  description?: string;
+  logoUrl?: string;
+  logoPublicId?: string;
+}) {
+  await connectToDatabase();
+  const slug = slugifyCompanyName(input.companyName);
+  return CompanyModel.findOneAndUpdate(
+    { slug },
+    {
+      name: input.companyName,
+      slug,
+      location: input.location?.trim() || "",
+      description: input.description?.trim() || "",
+      logoUrl: input.logoUrl || "",
+      logoPublicId: input.logoPublicId || "",
+    },
+    { new: true, upsert: true, setDefaultsOnInsert: true },
+  );
 }

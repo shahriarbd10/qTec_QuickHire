@@ -10,6 +10,9 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ message: "Not authenticated." }, { status: 401 });
     }
+    if (user.role !== "admin") {
+      return NextResponse.json({ message: "Not authorized." }, { status: 403 });
+    }
 
     const { dataUri, publicId } = (await request.json()) as { dataUri?: string; publicId?: string };
     if (!dataUri) {

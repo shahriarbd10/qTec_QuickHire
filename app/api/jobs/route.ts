@@ -13,6 +13,12 @@ export async function POST(request: Request) {
     if (!user) {
       return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
     }
+    if (!user.companyId || !user.company) {
+      return NextResponse.json({ error: "Admin company is not configured." }, { status: 400 });
+    }
+    if (user.role !== "admin") {
+      return NextResponse.json({ error: "Not authorized." }, { status: 403 });
+    }
 
     const body = await request.json();
     const parsed = jobSchema.safeParse(body);
@@ -26,8 +32,11 @@ export async function POST(request: Request) {
 
     const job = await addJob({
       ...parsed.data,
-      logoText: parsed.data.company.slice(0, 2).toUpperCase(),
+      companyId: user.companyId,
+      company: user.company,
+      logoText: user.company.slice(0, 2).toUpperCase(),
       color: "#4f46e5",
+      createdByUserId: user.id,
     });
 
     return NextResponse.json({ data: job }, { status: 201 });

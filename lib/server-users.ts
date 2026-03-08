@@ -11,6 +11,7 @@ export function sanitizeUser(user: Record<string, unknown>): AuthUser {
     email: String(user.email || ""),
     role: (String(user.role || "user") as AuthUser["role"]),
     avatarUrl: String(user.avatarUrl || ""),
+    companyId: String(user.companyId || ""),
     company: String(user.company || ""),
     emailVerified: Boolean(user.emailVerifiedAt),
   };

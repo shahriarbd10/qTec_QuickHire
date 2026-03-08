@@ -2,6 +2,7 @@ import { InferSchemaType, Model, Schema, model, models } from "mongoose";
 
 const JobSchema = new Schema(
   {
+    companyId: { type: Schema.Types.ObjectId, ref: "Company", required: true, index: true },
     title: { type: String, required: true },
     company: { type: String, required: true },
     location: { type: String, required: true },
@@ -15,6 +16,7 @@ const JobSchema = new Schema(
     featured: { type: Boolean, default: false },
     latest: { type: Boolean, default: false },
     color: { type: String, required: true },
+    createdByUserId: { type: Schema.Types.ObjectId, ref: "User", default: null },
   },
   {
     timestamps: true,

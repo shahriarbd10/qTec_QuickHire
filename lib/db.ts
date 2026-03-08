@@ -33,6 +33,21 @@ export async function connectToDatabase() {
     });
   }
 
-  cache.conn = await cache.promise;
-  return cache.conn;
+  try {
+    cache.conn = await cache.promise;
+    return cache.conn;
+  } catch (error) {
+    cache.promise = null;
+
+    if (
+      error instanceof Error &&
+      error.message.toLowerCase().includes("querysrv econnrefused")
+    ) {
+      throw new Error(
+        "QuickHire could not reach MongoDB Atlas because the SRV DNS lookup failed. Replace DATABASE_URL with the standard mongodb:// driver URI from Atlas or use a DNS/network that allows SRV lookups.",
+      );
+    }
+
+    throw error;
+  }
 }

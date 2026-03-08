@@ -5,18 +5,19 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { Trash2 } from "lucide-react";
 import { Footer } from "@/components/footer";
 import { SiteHeader } from "@/components/site-header";
-import { AuthUser, Job } from "@/lib/types";
+import { AuthUser, Job, JobCategory, JobType } from "@/lib/types";
 
 const defaultForm = {
   title: "",
-  company: "",
   location: "",
-  category: "Design",
-  type: "Full-Time",
+  category: "Design" as JobCategory,
+  type: "Full-Time" as JobType,
   summary: "",
   description: "",
   logoUrl: "",
   logoPublicId: "",
+  featured: false,
+  latest: false,
 };
 
 export function AdminPage({
@@ -48,13 +49,14 @@ export function AdminPage({
     }
 
     setJobs((current) => [result.data, ...current]);
-    setForm(defaultForm);
+    setForm({ ...defaultForm });
     setStatus("Job created.");
   }
 
   async function handleLogoUpload(event: ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];
     if (!file) return;
+
     setUploading(true);
     setStatus(null);
 
@@ -113,7 +115,7 @@ export function AdminPage({
               Manage QuickHire jobs
             </h1>
             <p className="mt-4 text-base leading-8 text-muted">
-              Basic admin panel for the assessment. Add or remove jobs through the required REST endpoints.
+              Manage job listings for {currentUser.company} through the assessment API.
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-4 text-sm text-muted">
               <span>{currentUser.name}</span>
@@ -123,6 +125,7 @@ export function AdminPage({
               </button>
             </div>
           </div>
+
           <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
             <form
               onSubmit={handleSubmit}
@@ -132,13 +135,12 @@ export function AdminPage({
               <div className="mt-6 grid gap-4">
                 {[
                   ["title", "Job title"],
-                  ["company", "Company"],
                   ["location", "Location"],
                   ["summary", "Short summary"],
                 ].map(([key, label]) => (
                   <input
                     key={key}
-                    value={form[key as keyof typeof form]}
+                    value={form[key as keyof typeof defaultForm] as string}
                     onChange={(event) =>
                       setForm((current) => ({
                         ...current,
@@ -150,10 +152,18 @@ export function AdminPage({
                     required
                   />
                 ))}
+
+                <div className="rounded-xl border border-border bg-surface/50 px-4 py-3 text-sm text-muted">
+                  Posting as <span className="font-semibold text-ink">{currentUser.company}</span>
+                </div>
+
                 <select
                   value={form.category}
                   onChange={(event) =>
-                    setForm((current) => ({ ...current, category: event.target.value }))
+                    setForm((current) => ({
+                      ...current,
+                      category: event.target.value as JobCategory,
+                    }))
                   }
                   className="h-12 rounded-xl border border-border px-4 outline-none"
                 >
@@ -170,10 +180,14 @@ export function AdminPage({
                     <option key={option}>{option}</option>
                   ))}
                 </select>
+
                 <select
                   value={form.type}
                   onChange={(event) =>
-                    setForm((current) => ({ ...current, type: event.target.value }))
+                    setForm((current) => ({
+                      ...current,
+                      type: event.target.value as JobType,
+                    }))
                   }
                   className="h-12 rounded-xl border border-border px-4 outline-none"
                 >
@@ -181,14 +195,51 @@ export function AdminPage({
                     <option key={option}>{option}</option>
                   ))}
                 </select>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <label className="flex items-center gap-3 rounded-xl border border-border px-4 py-3 text-sm text-ink">
+                    <input
+                      type="checkbox"
+                      checked={form.featured}
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, featured: event.target.checked }))
+                      }
+                    />
+                    Featured job
+                  </label>
+                  <label className="flex items-center gap-3 rounded-xl border border-border px-4 py-3 text-sm text-ink">
+                    <input
+                      type="checkbox"
+                      checked={form.latest}
+                      onChange={(event) =>
+                        setForm((current) => ({ ...current, latest: event.target.checked }))
+                      }
+                    />
+                    Latest jobs section
+                  </label>
+                </div>
+
                 <label className="rounded-xl border border-dashed border-border px-4 py-4 text-sm text-muted">
                   <span className="block font-medium text-ink">Company logo</span>
                   <span className="mt-1 block">Upload to Cloudinary for this project</span>
-                  <input type="file" accept="image/*" onChange={handleLogoUpload} className="mt-3 block w-full text-sm" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="mt-3 block w-full text-sm"
+                  />
                 </label>
+
                 {form.logoUrl ? (
-                  <Image src={form.logoUrl} alt="Uploaded logo" width={64} height={64} className="h-16 w-16 rounded-xl border border-border object-cover" />
+                  <Image
+                    src={form.logoUrl}
+                    alt="Uploaded logo"
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-xl border border-border object-cover"
+                  />
                 ) : null}
+
                 <textarea
                   value={form.description}
                   onChange={(event) =>
@@ -198,8 +249,9 @@ export function AdminPage({
                   className="min-h-40 rounded-xl border border-border px-4 py-3 outline-none"
                   required
                 />
+
                 <button className="h-12 rounded-xl bg-brand text-sm font-semibold text-white">
-                  Create job
+                  {uploading ? "Uploading..." : "Create job"}
                 </button>
                 {status ? <p className="text-sm text-muted">{status}</p> : null}
               </div>
@@ -216,7 +268,7 @@ export function AdminPage({
                     <div>
                       <h3 className="text-lg font-semibold">{job.title}</h3>
                       <p className="mt-1 text-sm text-muted">
-                        {job.company} • {job.location} • {job.category}
+                        {job.company} {" • "} {job.location} {" • "} {job.category}
                       </p>
                     </div>
                     <button

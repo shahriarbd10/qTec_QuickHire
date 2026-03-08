@@ -12,6 +12,7 @@ export type JobType = "Full-Time" | "Part-Time" | "Remote";
 
 export type Job = {
   id: string;
+  companyId?: string;
   title: string;
   company: string;
   location: string;
@@ -31,6 +32,7 @@ export type Job = {
 export type Application = {
   id: string;
   jobId: string;
+  companyId?: string;
   name: string;
   email: string;
   resumeLink: string;
@@ -44,6 +46,7 @@ export type AuthUser = {
   email: string;
   role: "admin" | "user";
   avatarUrl: string;
+  companyId: string;
   company: string;
   emailVerified: boolean;
 };

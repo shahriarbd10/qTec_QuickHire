@@ -20,8 +20,17 @@ export async function HomePage() {
   return (
     <main>
       <section className="bg-white">
-        <div className="relative mx-auto overflow-hidden bg-[#f8f8fd] max-w-[1440px]">
+        <div className="relative mx-auto overflow-hidden bg-[#f8f8fd] max-w-[1240px]">
           <SiteHeader />
+          <div className="pointer-events-none absolute bottom-0 right-0 z-50 h-[132px] w-[74%] sm:h-[168px] lg:h-[248px] lg:w-[468px]">
+            <Image
+              src="/images/hero/bottom-slope.png"
+              alt=""
+              fill
+              className="object-contain object-right-bottom"
+              sizes="468px"
+            />
+          </div>
           <div className="container-shell relative grid gap-6 pb-16 pt-0 lg:h-[640px] lg:min-h-0 lg:grid-cols-[629px_minmax(0,1fr)] lg:items-start lg:gap-0 lg:pb-0">
             <div className="relative z-40 max-w-[852px] py-2 md:py-8 lg:pt-[56px]">
             <h1 className="max-w-[470px] text-[3.2rem] font-semibold leading-[0.92] tracking-tightish text-ink sm:text-[5.15rem] lg:max-w-[533px] lg:text-[72px] lg:leading-[1.1] lg:tracking-normal">
@@ -103,15 +112,6 @@ export async function HomePage() {
                   fill
                   className="object-contain object-left-top"
                   sizes="920px"
-                />
-              </div>
-              <div className="pointer-events-none absolute bottom-0 right-[-12px] z-50 h-[132px] w-[74%] sm:h-[168px] lg:h-[248px] lg:w-[430px]">
-                <Image
-                  src="/images/hero/bottom-slope.png"
-                  alt=""
-                  fill
-                  className="object-contain object-right-bottom"
-                  sizes="430px"
                 />
               </div>
               <div className="relative z-40 mx-auto hidden h-[430px] w-[286px] sm:h-[590px] sm:w-[408px] lg:absolute lg:left-[0px] lg:top-[52px] lg:block lg:h-[640px] lg:w-[455px]">
@@ -241,8 +241,8 @@ export async function HomePage() {
         </Link>
       </section>
 
-      <section className="bg-white py-8 sm:py-16">
-        <div className="relative mx-auto min-h-[720px] max-w-[1440px] overflow-hidden sm:min-h-[877px]">
+      <section className="bg-white pt-8 sm:pt-16">
+        <div className="relative mx-auto min-h-[720px] max-w-[1240px] overflow-hidden sm:min-h-[877px]">
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute inset-0">
               <Image

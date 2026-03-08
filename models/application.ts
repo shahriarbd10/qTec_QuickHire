@@ -3,6 +3,7 @@ import { InferSchemaType, Model, Schema, model, models } from "mongoose";
 const ApplicationSchema = new Schema(
   {
     jobId: { type: Schema.Types.ObjectId, ref: "Job", required: true },
+    companyId: { type: Schema.Types.ObjectId, ref: "Company", required: true, index: true },
     name: { type: String, required: true },
     email: { type: String, required: true },
     resumeLink: { type: String, required: true },

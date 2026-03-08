@@ -19,9 +19,13 @@ export async function POST(request: Request) {
     if (!job) {
       return NextResponse.json({ error: "Job not found." }, { status: 404 });
     }
+    if (!job.companyId) {
+      return NextResponse.json({ error: "Job is missing company ownership." }, { status: 400 });
+    }
 
     const application = await addApplication({
       ...parsed.data,
+      companyId: job.companyId,
     });
 
     return NextResponse.json({ data: application }, { status: 201 });

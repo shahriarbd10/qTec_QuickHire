@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import { ensureCompanyForAdmin } from "@/lib/data";
 import { connectToDatabase } from "@/lib/db";
+import { sendRegistrationGreetingEmail } from "@/lib/server-email";
 import { issueEmailVerificationOtp } from "@/lib/server-email-verification";
 import { formatRetryAfter, hashPassword } from "@/lib/server-auth";
 import { UserModel } from "@/models/user";
@@ -15,8 +17,11 @@ export async function POST(request: Request) {
       company?: string;
     };
 
-    if (!name || !email || !password) {
-      return NextResponse.json({ message: "Name, email, and password are required." }, { status: 400 });
+    if (!name || !email || !password || !company) {
+      return NextResponse.json(
+        { message: "Name, company, email, and password are required." },
+        { status: 400 },
+      );
     }
 
     if (password.length < 8) {
@@ -25,6 +30,7 @@ export async function POST(request: Request) {
 
     await connectToDatabase();
     const normalizedEmail = email.trim().toLowerCase();
+    const companyRecord = await ensureCompanyForAdmin({ companyName: company.trim() });
     const existing = await UserModel.findOne({ email: normalizedEmail });
 
     if (existing) {
@@ -33,6 +39,7 @@ export async function POST(request: Request) {
       }
 
       existing.name = name.trim();
+      existing.set("companyId", companyRecord._id);
       existing.company = company?.trim() || "";
       existing.passwordHash = await hashPassword(password);
 
@@ -40,6 +47,9 @@ export async function POST(request: Request) {
       if (!verificationResult.ok) {
         return NextResponse.json({ message: verificationResult.message }, { status: 429 });
       }
+      try {
+        await sendRegistrationGreetingEmail(existing.email, existing.name, existing.company);
+      } catch {}
 
       return NextResponse.json({
         verificationRequired: true,
@@ -55,6 +65,7 @@ export async function POST(request: Request) {
     const user = await UserModel.create({
       name: name.trim(),
       email: normalizedEmail,
+      companyId: companyRecord._id as never,
       company: company?.trim() || "",
       passwordHash: await hashPassword(password),
     });
@@ -63,6 +74,9 @@ export async function POST(request: Request) {
     if (!verificationResult.ok) {
       return NextResponse.json({ message: verificationResult.message }, { status: 429 });
     }
+    try {
+      await sendRegistrationGreetingEmail(user.email, user.name, user.company);
+    } catch {}
 
     return NextResponse.json(
       {

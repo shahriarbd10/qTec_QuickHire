@@ -85,36 +85,93 @@ export function RegisterPage() {
     >
       {otpStep ? (
         <form className="space-y-4" onSubmit={handleVerify}>
-          <input value={email} readOnly className="h-12 w-full rounded-xl border border-border bg-surface px-4" />
+          <input
+            value={email}
+            readOnly
+            className="h-14 w-full rounded-2xl border border-border bg-surface px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+          />
           <input
             value={otp}
             onChange={(event) => setOtp(event.target.value)}
             placeholder="6-digit code"
-            className="h-12 w-full rounded-xl border border-border px-4 outline-none"
+            className="h-14 w-full rounded-2xl border border-border px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-muted"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
             required
           />
-          <button className="h-12 w-full rounded-xl bg-brand text-sm font-semibold text-white">
+          <button
+            className="h-14 w-full rounded-2xl bg-brand text-[16px] font-bold leading-[1.6] tracking-normal text-white"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+          >
             {loading ? "Verifying..." : "Verify email"}
           </button>
           <button
             type="button"
             onClick={handleResend}
-            className="text-sm font-semibold text-brand"
+            className="text-[15px] font-semibold leading-[1.6] tracking-normal text-brand"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
           >
             Resend code
           </button>
-          {message ? <p className="text-sm text-muted">{message}</p> : null}
+          {message ? (
+            <p
+              className="text-[15px] leading-[1.6] tracking-normal text-muted"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              {message}
+            </p>
+          ) : null}
         </form>
       ) : (
         <form className="space-y-4" onSubmit={handleRegister}>
-          <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Full name" className="h-12 w-full rounded-xl border border-border px-4 outline-none" required />
-          <input value={company} onChange={(event) => setCompany(event.target.value)} placeholder="Company name" className="h-12 w-full rounded-xl border border-border px-4 outline-none" />
-          <input value={email} onChange={(event) => setEmail(event.target.value)} type="email" placeholder="Email address" className="h-12 w-full rounded-xl border border-border px-4 outline-none" required />
-          <input value={password} onChange={(event) => setPassword(event.target.value)} type="password" placeholder="Password" className="h-12 w-full rounded-xl border border-border px-4 outline-none" required />
-          <button className="h-12 w-full rounded-xl bg-brand text-sm font-semibold text-white">
+          <input
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            placeholder="Full name"
+            className="h-14 w-full rounded-2xl border border-border px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-muted"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+            required
+          />
+          <input
+            value={company}
+            onChange={(event) => setCompany(event.target.value)}
+            placeholder="Company name"
+            className="h-14 w-full rounded-2xl border border-border px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-muted"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+            required
+          />
+          <input
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            type="email"
+            placeholder="Email address"
+            className="h-14 w-full rounded-2xl border border-border px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-muted"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+            required
+          />
+          <input
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            type="password"
+            placeholder="Password"
+            className="h-14 w-full rounded-2xl border border-border px-5 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-muted"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+            required
+          />
+          <button
+            className="h-14 w-full rounded-2xl bg-brand text-[16px] font-bold leading-[1.6] tracking-normal text-white"
+            style={{ fontFamily: '"Epilogue", sans-serif' }}
+          >
             {loading ? "Creating..." : "Create account"}
           </button>
-          {message ? <p className="text-sm text-muted">{message}</p> : null}
+          {message ? (
+            <p
+              className="text-[15px] leading-[1.6] tracking-normal text-muted"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              {message}
+            </p>
+          ) : null}
         </form>
       )}
     </AuthShell>
