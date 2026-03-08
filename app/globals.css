@@ -1,4 +1,5 @@
 @import url("https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -15,7 +16,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f6f7fb;
+  background: #ffffff;
   color: #1f2940;
   font-family: "Clash Display", sans-serif;
   font-feature-settings: "ss01" 1, "ss02" 1, "ss03" 1;
@@ -40,10 +41,16 @@ a {
 
 .section-title {
   @apply text-[2.25rem] font-semibold leading-[1.1] tracking-normal text-ink sm:text-[3rem];
+  font-family: "Clash Display", sans-serif;
 }
 
 .section-title span {
   @apply text-accent;
+}
+
+.section-link {
+  @apply inline-flex items-center text-[16px] font-semibold leading-[1.6] tracking-normal text-brand;
+  font-family: "Epilogue", sans-serif;
 }
 
 .pill {

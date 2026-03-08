@@ -2,62 +2,129 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
 import { LogoMark } from "@/components/ui/logo-mark";
 
+const footerLinkClass =
+  'text-[16px] font-normal leading-[1.6] tracking-normal text-[#d6ddeb]';
+
 export function Footer() {
   return (
-    <footer className="bg-night text-white">
-      <div className="container-shell py-12">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
-          <div className="space-y-5">
-            <Link href="/" className="flex items-center gap-2 font-semibold">
+    <footer className="bg-[#202430] text-white">
+      <div className="container-shell pt-16 lg:min-h-[497px] lg:pt-16">
+        <div className="grid gap-12 lg:grid-cols-[376px_105px_97px_362px] lg:gap-[88px]">
+          <div>
+            <Link href="/" className="inline-flex items-center">
               <LogoMark src="/images/footer/logo.png" />
             </Link>
-            <p className="max-w-xs text-sm leading-7 text-white/65">
+            <p
+              className="mt-8 max-w-[376px] text-[16px] font-normal leading-[1.6] tracking-normal text-[#d6ddeb]"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
               Great platform for the job seeker that passionate about startups.
               Find your dream job easier.
             </p>
           </div>
-          <div className="space-y-3 text-sm text-white/72">
-            <h3 className="font-semibold text-white">About</h3>
-            <p>Companies</p>
-            <p>Pricing</p>
-            <p>Terms</p>
-            <p>Advice</p>
-            <p>Privacy Policy</p>
+
+          <div>
+            <h3
+              className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              About
+            </h3>
+            <div
+              className="mt-4 flex flex-col gap-4"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              <Link href="/jobs" className={footerLinkClass}>
+                Companies
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Pricing
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Terms
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Advice
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Privacy Policy
+              </Link>
+            </div>
           </div>
-          <div className="space-y-3 text-sm text-white/72">
-            <h3 className="font-semibold text-white">Resources</h3>
-            <p>Help Docs</p>
-            <p>Guide</p>
-            <p>Updates</p>
-            <p>Contact Us</p>
+
+          <div>
+            <h3
+              className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              Resources
+            </h3>
+            <div
+              className="mt-4 flex flex-col gap-4"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              <Link href="/jobs" className={footerLinkClass}>
+                Help Docs
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Guide
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Updates
+              </Link>
+              <Link href="/jobs" className={footerLinkClass}>
+                Contact Us
+              </Link>
+            </div>
           </div>
-          <div className="space-y-4">
-            <h3 className="font-semibold">Get job notifications</h3>
-            <p className="max-w-xs text-sm leading-7 text-white/65">
+
+          <div>
+            <h3
+              className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              Get job notifications
+            </h3>
+            <p
+              className="mt-4 max-w-[306px] text-[16px] font-normal leading-[1.6] tracking-normal text-[#d6ddeb]"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
               The latest job news, articles, sent to your inbox weekly.
             </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col gap-2 sm:flex-row">
               <input
-                className="h-11 flex-1 border border-white/10 bg-white px-4 text-sm text-ink outline-none"
+                className="h-[50px] w-full border border-[#d6ddeb] bg-white px-4 text-[16px] font-normal leading-[1.6] tracking-normal text-ink outline-none placeholder:text-[#a8adb7] sm:w-[223px]"
                 placeholder="Email Address"
+                style={{ fontFamily: '"Epilogue", sans-serif' }}
               />
-              <button className="h-11 bg-brand px-6 text-sm font-semibold text-white">
+              <button
+                className="h-[50px] bg-brand px-6 text-[16px] font-bold leading-[1.6] tracking-normal text-white sm:w-[131px]"
+                style={{ fontFamily: '"Epilogue", sans-serif' }}
+              >
                 Subscribe
               </button>
             </div>
           </div>
         </div>
-        <div className="mt-10 flex flex-col gap-5 border-t border-white/10 pt-8 text-sm text-white/55 sm:flex-row sm:items-center sm:justify-between">
-          <p>2021 @ QuickHire. All rights reserved.</p>
-          <div className="flex items-center gap-3">
-            {[Facebook, Instagram, Twitter, Linkedin].map((Icon, index) => (
-              <span
-                key={index}
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10"
-              >
-                <Icon className="h-4 w-4" />
-              </span>
-            ))}
+
+        <div className="mt-16 border-t-2 border-white/10 pt-10 pb-10">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+            <p
+              className="text-[16px] font-medium leading-[1.6] tracking-normal text-white/50"
+              style={{ fontFamily: '"Epilogue", sans-serif' }}
+            >
+              2021 @ QuickHire. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6">
+              {[Facebook, Instagram, Twitter, Linkedin].map((Icon, index) => (
+                <span
+                  key={index}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white"
+                >
+                  <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>

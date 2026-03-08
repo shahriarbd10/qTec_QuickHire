@@ -8,13 +8,28 @@ import { SiteHeader } from "@/components/site-header";
 import { JobCard } from "@/components/job-card";
 import { Job } from "@/lib/types";
 
-export function JobsPage({ jobs }: { jobs: Job[] }) {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
-  const [location, setLocation] = useState("All");
-
+export function JobsPage({
+  jobs,
+  initialCategory,
+  initialQuery,
+  initialLocation,
+}: {
+  jobs: Job[];
+  initialCategory?: string;
+  initialQuery?: string;
+  initialLocation?: string;
+}) {
   const categories = ["All", ...new Set(jobs.map((job) => job.category))];
   const locations = ["All", ...new Set(jobs.map((job) => job.location))];
+
+  const safeInitialCategory =
+    initialCategory && categories.includes(initialCategory) ? initialCategory : "All";
+  const safeInitialLocation =
+    initialLocation && locations.includes(initialLocation) ? initialLocation : "All";
+
+  const [query, setQuery] = useState(initialQuery ?? "");
+  const [category, setCategory] = useState(safeInitialCategory);
+  const [location, setLocation] = useState(safeInitialLocation);
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
