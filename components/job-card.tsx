@@ -26,7 +26,7 @@ export function JobCard({ job }: { job: Job }) {
           </div>
         )}
         <span
-          className="inline-flex h-[34px] shrink-0 items-center justify-center border border-brand px-3 text-[16px] font-normal leading-[1.6] tracking-normal text-brand"
+          className="inline-flex h-[34px] shrink-0 items-center justify-center whitespace-nowrap border border-brand px-3 text-[16px] font-normal leading-[1.6] tracking-normal text-brand"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.type}
@@ -34,19 +34,19 @@ export function JobCard({ job }: { job: Job }) {
       </div>
       <div className="mt-4">
         <h3
-          className="text-[18px] font-semibold leading-[1.6] tracking-normal text-ink"
+          className="line-clamp-1 min-h-[29px] text-[18px] font-semibold leading-[1.6] tracking-normal text-ink"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.title}
         </h3>
         <p
-          className="mt-0.5 line-clamp-1 text-[16px] font-normal leading-[1.6] tracking-normal text-[#515b6f]"
+          className="mt-0.5 line-clamp-1 min-h-[26px] text-[16px] font-normal leading-[1.6] tracking-normal text-[#515b6f]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.company} • {job.location}
         </p>
         <p
-          className="mt-4 line-clamp-2 text-[16px] font-normal leading-[1.6] tracking-normal text-[#7c8493]"
+          className="mt-4 line-clamp-3 min-h-[77px] text-[16px] font-normal leading-[1.6] tracking-normal text-[#7c8493]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.summary}
@@ -54,13 +54,13 @@ export function JobCard({ job }: { job: Job }) {
       </div>
       <div className="mt-4 flex flex-wrap gap-2">
         <span
-          className="inline-flex h-[30px] items-center justify-center rounded-[80px] bg-[rgba(86,205,173,0.1)] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#56cdad]"
+          className="inline-flex h-[30px] items-center justify-center whitespace-nowrap rounded-[80px] bg-[rgba(86,205,173,0.1)] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#56cdad]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
-          Full-Time
+          {job.type}
         </span>
         <span
-          className="inline-flex h-[30px] items-center justify-center rounded-[80px] bg-[#fff4df] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#ef9a29]"
+          className="inline-flex h-[30px] max-w-full items-center justify-center whitespace-nowrap rounded-[80px] bg-[#fff4df] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#ef9a29]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.category}

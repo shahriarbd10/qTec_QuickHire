@@ -102,21 +102,27 @@ export async function sendRegistrationGreetingEmail(email: string, name: string,
 
 export async function sendWelcomeEmail(email: string, name: string, dashboardUrl: string) {
   const html = buildEmailShell(
-    "Welcome to QuickHire",
+    "Your QuickHire account is live",
     `
       <p style="margin:0 0 16px">Hi ${name || "there"},</p>
       <p style="margin:0 0 16px">
-        Your account is ready. You can now manage job postings, company assets, and incoming applications.
+        Welcome to QuickHire. Your email has been verified successfully and your admin account is now active.
+      </p>
+      <p style="margin:0 0 16px">
+        You can now post jobs, manage your company presence, and review incoming applications from the QuickHire dashboard.
       </p>
       <div style="margin:26px 0">
         <a href="${dashboardUrl}" style="display:inline-block;background:#4f46e5;color:#ffffff;padding:14px 22px;border-radius:999px;text-decoration:none;font-weight:700">Open QuickHire admin</a>
       </div>
+      <p style="margin:0;color:#425268">
+        We are glad to have you on board.
+      </p>
     `,
   );
 
   await sendMail({
     to: email,
-    subject: "Welcome to QuickHire",
+    subject: "Welcome to QuickHire, your account is ready",
     html,
   });
 }
@@ -141,6 +147,30 @@ export async function sendPasswordResetOtpEmail(email: string, name: string, otp
   await sendMail({
     to: email,
     subject: "QuickHire password reset code",
+    html,
+  });
+}
+
+export async function sendPasswordChangeOtpEmail(email: string, name: string, otp: string) {
+  const html = buildEmailShell(
+    "Confirm your password change",
+    `
+      <p style="margin:0 0 16px">Hi ${name || "there"},</p>
+      <p style="margin:0 0 16px">
+        We received a request to change your QuickHire admin password. Use the 6-digit code below to confirm this update.
+      </p>
+      <div style="margin:28px 0;padding:18px 20px;border-radius:22px;background:#f4f7fb;border:1px solid #dbe4ec;text-align:center">
+        <div style="font-size:12px;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:#7f5c31;margin-bottom:10px">Change password code</div>
+        <div style="font-size:34px;line-height:1;font-weight:800;letter-spacing:0.28em;color:#1f2940">${otp}</div>
+      </div>
+      <p style="margin:0 0 12px">This code will expire in 10 minutes.</p>
+      <p style="margin:0">If you did not request this change, keep your current password and ignore this email.</p>
+    `,
+  );
+
+  await sendMail({
+    to: email,
+    subject: "QuickHire password change code",
     html,
   });
 }

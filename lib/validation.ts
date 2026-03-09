@@ -1,19 +1,11 @@
 import { z } from "zod";
+import { JOB_CATEGORIES, JOB_TYPES } from "@/lib/types";
 
 export const jobSchema = z.object({
   title: z.string().min(2),
   location: z.string().min(2),
-  category: z.enum([
-    "Design",
-    "Sales",
-    "Marketing",
-    "Finance",
-    "Technology",
-    "Engineering",
-    "Business",
-    "Human Resource",
-  ]),
-  type: z.enum(["Full-Time", "Part-Time", "Remote"]),
+  category: z.enum(JOB_CATEGORIES as [typeof JOB_CATEGORIES[number], ...typeof JOB_CATEGORIES[number][]]),
+  type: z.enum(JOB_TYPES as [typeof JOB_TYPES[number], ...typeof JOB_TYPES[number][]]),
   summary: z.string().min(10),
   description: z.string().min(40),
   logoUrl: z.string().url().optional().or(z.literal("")),

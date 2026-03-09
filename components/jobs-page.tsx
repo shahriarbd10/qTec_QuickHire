@@ -30,6 +30,7 @@ export function JobsPage({
   const [query, setQuery] = useState(initialQuery ?? "");
   const [category, setCategory] = useState(safeInitialCategory);
   const [location, setLocation] = useState(safeInitialLocation);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const filteredJobs = useMemo(() => {
     return jobs.filter((job) => {
@@ -42,6 +43,18 @@ export function JobsPage({
       return matchesQuery && matchesCategory && matchesLocation;
     });
   }, [category, jobs, location, query]);
+
+  const suggestions = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return [];
+
+    const matches = jobs
+      .flatMap((job) => [job.title, job.company])
+      .filter((value, index, array) => array.indexOf(value) === index)
+      .filter((value) => value.toLowerCase().includes(normalized));
+
+    return matches.slice(0, 6);
+  }, [jobs, query]);
 
   return (
     <main>
@@ -58,15 +71,38 @@ export function JobsPage({
             </p>
           </div>
           <div className="mt-10 grid gap-4 rounded-2xl border border-border bg-white p-5 shadow-card md:grid-cols-[1.5fr_1fr_1fr_auto]">
-            <label className="flex items-center gap-3 rounded-xl border border-border px-4">
+            <div className="relative">
+              <label className="flex items-center gap-3 rounded-xl border border-border px-4">
               <Search className="h-4 w-4 text-muted" />
               <input
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
                 placeholder="Search title or company"
                 className="h-12 w-full border-0 outline-none"
               />
-            </label>
+              </label>
+              {showSuggestions && suggestions.length ? (
+                <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl border border-border bg-white shadow-card">
+                  {suggestions.map((suggestion) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      onMouseDown={(event) => {
+                        event.preventDefault();
+                        setQuery(suggestion);
+                        setShowSuggestions(false);
+                      }}
+                      className="flex w-full items-center justify-between px-4 py-3 text-left font-epilogue text-sm text-[#515b6f] transition hover:bg-[#f7f8fc]"
+                    >
+                      <span className="truncate">{suggestion}</span>
+                      <Search className="h-4 w-4 shrink-0 text-[#a8adb7]" />
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
             <select
               value={category}
               onChange={(event) => setCategory(event.target.value)}

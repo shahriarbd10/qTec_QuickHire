@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/lib/db";
-import { Application, Job, JobCategory } from "@/lib/types";
+import { Application, CompanyProfile, Job, JobCategory } from "@/lib/types";
 import { JobModel } from "@/models/job";
 import { ApplicationModel } from "@/models/application";
 import { CompanyModel } from "@/models/company";
@@ -23,6 +23,16 @@ type DatabaseJob = {
   color: string;
   createdByUserId?: { toString(): string };
   createdAt: Date;
+};
+
+type DatabaseCompany = {
+  _id: { toString(): string };
+  name: string;
+  slug: string;
+  location?: string;
+  description?: string;
+  logoUrl?: string;
+  logoPublicId?: string;
 };
 
 const seedJobs: Omit<Job, "id" | "createdAt">[] = [
@@ -259,6 +269,18 @@ function serializeJob(job: DatabaseJob): Job {
   };
 }
 
+function serializeCompany(company: DatabaseCompany): CompanyProfile {
+  return {
+    id: company._id.toString(),
+    name: company.name,
+    slug: company.slug,
+    location: company.location || "",
+    description: company.description || "",
+    logoUrl: company.logoUrl || "",
+    logoPublicId: company.logoPublicId || "",
+  };
+}
+
 export async function ensureSeedJobs() {
   await connectToDatabase();
   const count = await JobModel.countDocuments();
@@ -336,6 +358,25 @@ export async function deleteJob(id: string, companyId?: string) {
   return removed ? serializeJob(removed) : null;
 }
 
+export async function updateJob(
+  id: string,
+  updates: Partial<Omit<Job, "id" | "createdAt">> & { companyId?: string },
+  companyId?: string,
+) {
+  await ensureSeedJobs();
+  const payload = {
+    ...updates,
+    companyId: updates.companyId || companyId,
+  };
+  const updated = (await JobModel.findOneAndUpdate(
+    companyId ? { _id: id, companyId } : { _id: id },
+    payload,
+    { new: true },
+  ).lean()) as DatabaseJob | null;
+
+  return updated ? serializeJob(updated) : null;
+}
+
 export async function addApplication(
   application: Omit<Application, "id" | "createdAt"> & { companyId: string },
 ) {
@@ -355,6 +396,67 @@ export async function addApplication(
     coverNote: created.coverNote,
     createdAt: created.createdAt.toISOString(),
   };
+}
+
+export async function getApplicationsByCompanyId(companyId: string) {
+  try {
+    await connectToDatabase();
+    const applications = await ApplicationModel.find({ companyId }).sort({ createdAt: -1 }).lean();
+
+    return applications.map((application) => ({
+      id: application._id.toString(),
+      jobId: application.jobId.toString(),
+      companyId: application.companyId.toString(),
+      name: application.name,
+      email: application.email,
+      resumeLink: application.resumeLink,
+      coverNote: application.coverNote,
+      createdAt: application.createdAt.toISOString(),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+export async function getCompanyById(companyId: string) {
+  try {
+    await connectToDatabase();
+    const company = (await CompanyModel.findById(companyId).lean()) as DatabaseCompany | null;
+    return company ? serializeCompany(company) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function updateCompanyById(
+  companyId: string,
+  updates: Partial<Pick<CompanyProfile, "name" | "location" | "description" | "logoUrl" | "logoPublicId">>,
+) {
+  await connectToDatabase();
+
+  const payload: Record<string, string> = {};
+  if (typeof updates.name === "string") {
+    payload.name = updates.name.trim();
+    payload.slug = slugifyCompanyName(updates.name);
+  }
+  if (typeof updates.location === "string") {
+    payload.location = updates.location.trim();
+  }
+  if (typeof updates.description === "string") {
+    payload.description = updates.description.trim();
+  }
+  if (typeof updates.logoUrl === "string") {
+    payload.logoUrl = updates.logoUrl;
+  }
+  if (typeof updates.logoPublicId === "string") {
+    payload.logoPublicId = updates.logoPublicId;
+  }
+
+  const updated = (await CompanyModel.findByIdAndUpdate(companyId, payload, {
+    new: true,
+  }).lean()) as DatabaseCompany | null;
+
+  return updated ? serializeCompany(updated) : null;
 }
 
 export async function ensureCompanyForAdmin(input: {

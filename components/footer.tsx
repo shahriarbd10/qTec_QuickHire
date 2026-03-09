@@ -9,8 +9,8 @@ export function Footer() {
   return (
     <footer className="bg-white text-white">
       <div className="mx-auto max-w-[1240px] bg-[#202430]">
-        <div className="px-5 pt-16 sm:px-8 lg:min-h-[497px] lg:px-[72px] lg:pt-16">
-        <div className="grid gap-12 lg:grid-cols-[376px_105px_97px_362px] lg:gap-0 lg:[grid-template-areas:'left_about_resources_right'] lg:[grid-template-columns:376px_105px_97px_362px] lg:justify-between">
+        <div className="px-5 pt-16 sm:px-8 lg:min-h-[497px] lg:px-[48px] lg:pt-16">
+        <div className="grid gap-12 lg:grid-cols-[320px_105px_97px_362px] lg:gap-0 lg:[grid-template-areas:'left_about_resources_right'] lg:[grid-template-columns:320px_105px_97px_362px] lg:justify-between">
           <div className="lg:[grid-area:left]">
             <Link href="/" className="inline-flex items-center">
               <LogoMark src="/images/footer/logo.png" />
@@ -24,7 +24,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="lg:[grid-area:about] lg:pl-[12px]">
+          <div className="lg:[grid-area:about]">
             <h3
               className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
               style={{ fontFamily: '"Epilogue", sans-serif' }}
@@ -53,7 +53,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="lg:[grid-area:resources] lg:pl-[20px]">
+          <div className="lg:[grid-area:resources]">
             <h3
               className="text-[18px] font-semibold leading-[1.6] tracking-normal text-white"
               style={{ fontFamily: '"Epilogue", sans-serif' }}

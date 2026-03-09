@@ -23,7 +23,10 @@ type PasswordResetUser = {
 
 export async function issuePasswordResetOtp(
   user: PasswordResetUser,
-  options: { enforceResendRules?: boolean } = {},
+  options: {
+    enforceResendRules?: boolean;
+    sendEmail?: (email: string, name: string, otp: string) => Promise<void>;
+  } = {},
 ) {
   const attempts = pruneEmailVerificationAttempts(user.passwordResetSendAttempts);
   const resendAttemptsUsed = Math.max(0, attempts.length - 1);
@@ -63,7 +66,7 @@ export async function issuePasswordResetOtp(
   user.passwordResetSendAttempts = [...attempts, new Date()];
   const updatedAttempts = pruneEmailVerificationAttempts(user.passwordResetSendAttempts);
   await user.save();
-  await sendPasswordResetOtpEmail(user.email, user.name, otp);
+  await (options.sendEmail || sendPasswordResetOtpEmail)(user.email, user.name, otp);
 
   return {
     ok: true as const,

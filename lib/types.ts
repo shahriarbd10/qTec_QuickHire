@@ -8,7 +8,35 @@ export type JobCategory =
   | "Business"
   | "Human Resource";
 
-export type JobType = "Full-Time" | "Part-Time" | "Remote";
+export const JOB_CATEGORIES: JobCategory[] = [
+  "Design",
+  "Sales",
+  "Marketing",
+  "Finance",
+  "Technology",
+  "Engineering",
+  "Business",
+  "Human Resource",
+];
+
+export type JobType =
+  | "Full-Time"
+  | "Half-Time"
+  | "Part-Time"
+  | "Contract"
+  | "Internship"
+  | "Remote"
+  | "Hybrid";
+
+export const JOB_TYPES: JobType[] = [
+  "Full-Time",
+  "Half-Time",
+  "Part-Time",
+  "Contract",
+  "Internship",
+  "Remote",
+  "Hybrid",
+];
 
 export type Job = {
   id: string;
@@ -49,4 +77,14 @@ export type AuthUser = {
   companyId: string;
   company: string;
   emailVerified: boolean;
+};
+
+export type CompanyProfile = {
+  id: string;
+  name: string;
+  slug: string;
+  location: string;
+  description: string;
+  logoUrl: string;
+  logoPublicId: string;
 };

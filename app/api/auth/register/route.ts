@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { ensureCompanyForAdmin } from "@/lib/data";
 import { connectToDatabase } from "@/lib/db";
-import { sendRegistrationGreetingEmail } from "@/lib/server-email";
 import { issueEmailVerificationOtp } from "@/lib/server-email-verification";
 import { formatRetryAfter, hashPassword } from "@/lib/server-auth";
 import { UserModel } from "@/models/user";
@@ -47,9 +46,6 @@ export async function POST(request: Request) {
       if (!verificationResult.ok) {
         return NextResponse.json({ message: verificationResult.message }, { status: 429 });
       }
-      try {
-        await sendRegistrationGreetingEmail(existing.email, existing.name, existing.company);
-      } catch {}
 
       return NextResponse.json({
         verificationRequired: true,
@@ -74,9 +70,6 @@ export async function POST(request: Request) {
     if (!verificationResult.ok) {
       return NextResponse.json({ message: verificationResult.message }, { status: 429 });
     }
-    try {
-      await sendRegistrationGreetingEmail(user.email, user.name, user.company);
-    } catch {}
 
     return NextResponse.json(
       {
