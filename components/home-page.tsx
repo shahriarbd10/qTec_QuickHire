@@ -10,12 +10,18 @@ import { categories, getJobs, trustedCompanies } from "@/lib/data";
 
 export async function HomePage() {
   const jobs = await getJobs();
-  const primaryFeaturedJobs = jobs.filter((job) => job.featured);
-  const fallbackFeaturedJobs = jobs.filter(
+  const sortedJobs = [...jobs].sort((left, right) => {
+    const diff = new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
+    if (diff !== 0) return diff;
+    return String(right.id).localeCompare(String(left.id));
+  });
+
+  const primaryFeaturedJobs = sortedJobs.filter((job) => job.featured);
+  const fallbackFeaturedJobs = sortedJobs.filter(
     (job) => !primaryFeaturedJobs.some((featuredJob) => featuredJob.id === job.id),
   );
   const featuredJobs = [...primaryFeaturedJobs, ...fallbackFeaturedJobs].slice(0, 8);
-  const latestJobs = jobs.filter((job) => job.latest).slice(0, 8);
+  const latestJobs = sortedJobs.filter((job) => job.latest).slice(0, 8);
 
   return (
     <main>
