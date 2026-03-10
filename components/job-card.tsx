@@ -52,15 +52,15 @@ export function JobCard({ job }: { job: Job }) {
           {job.summary}
         </p>
       </div>
-      <div className="mt-4 flex flex-wrap gap-2">
+      <div className="mt-4 flex items-center gap-2 overflow-hidden">
         <span
-          className="inline-flex h-[30px] items-center justify-center whitespace-nowrap rounded-[80px] bg-[rgba(86,205,173,0.1)] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#56cdad]"
+          className="inline-flex h-[30px] shrink-0 items-center justify-center whitespace-nowrap rounded-[80px] bg-[rgba(86,205,173,0.1)] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#56cdad]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.type}
         </span>
         <span
-          className="inline-flex h-[30px] max-w-full items-center justify-center whitespace-nowrap rounded-[80px] bg-[#fff4df] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#ef9a29]"
+          className="inline-flex h-[30px] min-w-0 max-w-full items-center justify-center truncate whitespace-nowrap rounded-[80px] bg-[#fff4df] px-4 text-[14px] font-semibold leading-[1.6] tracking-normal text-[#ef9a29]"
           style={{ fontFamily: '"Epilogue", sans-serif' }}
         >
           {job.category}
