@@ -3,17 +3,19 @@ import { ensureCompanyForAdmin } from "@/lib/data";
 import { connectToDatabase } from "@/lib/db";
 import { issueEmailVerificationOtp } from "@/lib/server-email-verification";
 import { formatRetryAfter, hashPassword } from "@/lib/server-auth";
+import { uploadCompanyLogoToCloudinary } from "@/lib/server-cloudinary";
 import { UserModel } from "@/models/user";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   try {
-    const { name, email, password, company } = (await request.json()) as {
+    const { name, email, password, company, companyLogoDataUri } = (await request.json()) as {
       name?: string;
       email?: string;
       password?: string;
       company?: string;
+      companyLogoDataUri?: string;
     };
 
     if (!name || !email || !password || !company) {
@@ -29,7 +31,21 @@ export async function POST(request: Request) {
 
     await connectToDatabase();
     const normalizedEmail = email.trim().toLowerCase();
-    const companyRecord = await ensureCompanyForAdmin({ companyName: company.trim() });
+    const companyName = company.trim();
+    const logoDataUri = typeof companyLogoDataUri === "string" ? companyLogoDataUri.trim() : "";
+    if (logoDataUri && !logoDataUri.startsWith("data:image/")) {
+      return NextResponse.json({ message: "Invalid company logo format." }, { status: 400 });
+    }
+    const uploadedLogo = logoDataUri ? await uploadCompanyLogoToCloudinary(logoDataUri) : null;
+    const companyRecord = await ensureCompanyForAdmin({
+      companyName,
+      ...(uploadedLogo
+        ? {
+            logoUrl: uploadedLogo.secure_url,
+            logoPublicId: uploadedLogo.public_id,
+          }
+        : {}),
+    });
     const existing = await UserModel.findOne({ email: normalizedEmail });
 
     if (existing) {

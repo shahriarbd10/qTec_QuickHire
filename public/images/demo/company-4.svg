@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Atlas Fintech">
+  <rect width="256" height="256" rx="56" fill="#ffffff"/>
+  <path d="M72 176c26-68 48-96 56-96s30 28 56 96" fill="none" stroke="#4f46e5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M92 176h72" stroke="#26a4ff" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="128" cy="92" r="14" fill="#56cdad"/>
+  <rect x="32" y="32" width="192" height="192" rx="48" fill="none" stroke="#d6ddeb" stroke-width="8"/>
+</svg>
+

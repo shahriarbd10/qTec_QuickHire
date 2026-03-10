@@ -4,6 +4,15 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { AuthShell } from "@/components/auth-shell";
 
+async function fileToDataUri(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(typeof reader.result === "string" ? reader.result : "");
+    reader.onerror = () => reject(new Error("Could not read the selected file."));
+    reader.readAsDataURL(file);
+  });
+}
+
 export function RegisterPage() {
   const router = useRouter();
   const [otpStep, setOtpStep] = useState(false);
@@ -12,8 +21,10 @@ export function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
+  const [companyLogoDataUri, setCompanyLogoDataUri] = useState<string>("");
   const [message, setMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [readingLogo, setReadingLogo] = useState(false);
 
   async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,7 +34,7 @@ export function RegisterPage() {
     const response = await fetch("/api/auth/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, company, email, password }),
+      body: JSON.stringify({ name, company, email, password, companyLogoDataUri }),
     });
     const result = await response.json();
     setLoading(false);
@@ -158,7 +169,68 @@ export function RegisterPage() {
             style={{ fontFamily: '"Epilogue", sans-serif' }}
             required
           />
+          <div className="rounded-2xl border border-border bg-white px-5 py-4">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-2xl border border-border bg-surface">
+                  {companyLogoDataUri ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={companyLogoDataUri} alt="Company logo preview" className="h-full w-full object-cover" />
+                  ) : (
+                    <span className="font-epilogue text-xs font-semibold text-muted">Logo</span>
+                  )}
+                </div>
+                <div>
+                  <p className="text-[15px] font-semibold leading-[1.4] tracking-normal text-ink" style={{ fontFamily: '"Epilogue", sans-serif' }}>
+                    Company logo (optional)
+                  </p>
+                  <p className="mt-1 text-[14px] leading-[1.5] tracking-normal text-muted" style={{ fontFamily: '"Epilogue", sans-serif' }}>
+                    You can change it later in the dashboard settings.
+                  </p>
+                </div>
+              </div>
+
+              <label
+                className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-border bg-white px-4 py-2 text-[14px] font-semibold leading-[1.6] tracking-normal text-ink transition hover:bg-surface"
+                style={{ fontFamily: '"Epilogue", sans-serif' }}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  disabled={loading || readingLogo}
+                  onChange={async (event) => {
+                    const file = event.target.files?.[0];
+                    event.currentTarget.value = "";
+                    if (!file) return;
+
+                    setReadingLogo(true);
+                    try {
+                      const dataUri = await fileToDataUri(file);
+                      setCompanyLogoDataUri(dataUri);
+                    } catch (readError) {
+                      setMessage(readError instanceof Error ? readError.message : "Could not read the selected file.");
+                    } finally {
+                      setReadingLogo(false);
+                    }
+                  }}
+                />
+                {readingLogo ? "Reading..." : companyLogoDataUri ? "Change logo" : "Upload logo"}
+              </label>
+            </div>
+            {companyLogoDataUri ? (
+              <button
+                type="button"
+                onClick={() => setCompanyLogoDataUri("")}
+                className="mt-3 text-[14px] font-semibold leading-[1.6] tracking-normal text-brand"
+                style={{ fontFamily: '"Epilogue", sans-serif' }}
+              >
+                Remove logo
+              </button>
+            ) : null}
+          </div>
           <button
+            disabled={loading}
             className="h-14 w-full rounded-2xl bg-brand text-[16px] font-bold leading-[1.6] tracking-normal text-white"
             style={{ fontFamily: '"Epilogue", sans-serif' }}
           >

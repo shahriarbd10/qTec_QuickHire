@@ -37,3 +37,19 @@ export async function uploadJobAssetToCloudinary(dataUri: string, publicId?: str
     ],
   });
 }
+
+export async function uploadCompanyLogoToCloudinary(dataUri: string, publicId?: string | null) {
+  configureCloudinary();
+
+  return cloudinary.uploader.upload(dataUri, {
+    folder: "quickhire/company-logos",
+    public_id: publicId ?? undefined,
+    overwrite: true,
+    invalidate: true,
+    resource_type: "image",
+    transformation: [
+      { width: 320, height: 320, crop: "fill", gravity: "auto" },
+      { quality: "auto:eco", fetch_format: "auto" },
+    ],
+  });
+}

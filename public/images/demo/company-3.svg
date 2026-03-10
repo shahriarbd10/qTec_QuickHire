@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Harbor Health">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#56cdad"/>
+      <stop offset="1" stop-color="#f4b63a"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="56" fill="url(#g)"/>
+  <path d="M128 58c22 28 54 46 54 84 0 34-24 58-54 58s-54-24-54-58c0-38 32-56 54-84z" fill="#fff" fill-opacity="0.92"/>
+  <path d="M128 104v72" stroke="#4f46e5" stroke-width="18" stroke-linecap="round"/>
+  <path d="M92 140h72" stroke="#4f46e5" stroke-width="18" stroke-linecap="round"/>
+</svg>
+

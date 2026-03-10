@@ -26,9 +26,9 @@ export function LoginPage() {
       body: JSON.stringify({ email, password }),
     });
     const result = await response.json();
-    setLoading(false);
 
     if (!response.ok) {
+      setLoading(false);
       setMessage(result.message || "Login failed.");
       if (result.verificationRequired) {
         router.push("/register");
@@ -198,10 +198,18 @@ export function LoginPage() {
             </button>
           </div>
           <button
+            disabled={loading}
             className="h-14 w-full rounded-2xl bg-brand text-[16px] font-bold leading-[1.6] tracking-normal text-white"
             style={{ fontFamily: '"Epilogue", sans-serif' }}
           >
-            {loading ? "Logging in..." : "Login"}
+            {loading ? (
+              <span className="inline-flex items-center justify-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/70 border-t-transparent" />
+                Logging in...
+              </span>
+            ) : (
+              "Login"
+            )}
           </button>
           {message ? (
             <p

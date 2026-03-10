@@ -7,8 +7,8 @@ const footerLinkClass =
 
 export function Footer() {
   return (
-    <footer className="bg-white text-white">
-      <div className="mx-auto max-w-[1240px] bg-[#202430]">
+    <footer className="w-full bg-[#202430] text-white">
+      <div className="mx-auto max-w-[1240px]">
         <div className="px-5 pt-16 sm:px-8 lg:min-h-[497px] lg:px-[48px] lg:pt-16">
         <div className="grid gap-12 lg:grid-cols-[320px_105px_97px_362px] lg:gap-0 lg:[grid-template-areas:'left_about_resources_right'] lg:[grid-template-columns:320px_105px_97px_362px] lg:justify-between">
           <div className="lg:[grid-area:left]">

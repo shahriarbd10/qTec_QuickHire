@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="VerdeHR Solutions">
+  <rect width="256" height="256" rx="56" fill="#f8f8fd"/>
+  <path d="M78 160c0-42 22-74 50-92 28 18 50 50 50 92 0 18-8 34-20 44H98c-12-10-20-26-20-44z" fill="#56cdad"/>
+  <path d="M128 78c-10 10-20 28-20 46 0 10 4 20 10 28" fill="none" stroke="#141b34" stroke-width="16" stroke-linecap="round"/>
+  <path d="M178 108h-44" stroke="#4f46e5" stroke-width="16" stroke-linecap="round"/>
+</svg>
+

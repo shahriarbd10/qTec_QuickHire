@@ -468,16 +468,27 @@ export async function ensureCompanyForAdmin(input: {
 }) {
   await connectToDatabase();
   const slug = slugifyCompanyName(input.companyName);
+  const update: Record<string, string> = {
+    name: input.companyName,
+    slug,
+  };
+
+  if (typeof input.location === "string") {
+    update.location = input.location.trim();
+  }
+  if (typeof input.description === "string") {
+    update.description = input.description.trim();
+  }
+  if (typeof input.logoUrl === "string") {
+    update.logoUrl = input.logoUrl;
+  }
+  if (typeof input.logoPublicId === "string") {
+    update.logoPublicId = input.logoPublicId;
+  }
+
   return CompanyModel.findOneAndUpdate(
     { slug },
-    {
-      name: input.companyName,
-      slug,
-      location: input.location?.trim() || "",
-      description: input.description?.trim() || "",
-      logoUrl: input.logoUrl || "",
-      logoPublicId: input.logoPublicId || "",
-    },
+    update,
     { new: true, upsert: true, setDefaultsOnInsert: true },
   );
 }

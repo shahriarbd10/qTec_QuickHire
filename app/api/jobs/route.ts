@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { addJob, getJobs } from "@/lib/data";
+import { addJob, getCompanyById, getJobs } from "@/lib/data";
 import { requireCurrentUser } from "@/lib/server-users";
 import { jobSchema } from "@/lib/validation";
 
@@ -30,11 +30,17 @@ export async function POST(request: Request) {
       );
     }
 
+    const company = await getCompanyById(user.companyId);
+    const logoUrl = parsed.data.logoUrl?.trim() ? parsed.data.logoUrl : company?.logoUrl || "";
+    const logoPublicId = parsed.data.logoPublicId?.trim() ? parsed.data.logoPublicId : company?.logoPublicId || "";
+
     const job = await addJob({
       ...parsed.data,
       companyId: user.companyId,
       company: user.company,
       logoText: user.company.slice(0, 2).toUpperCase(),
+      logoUrl,
+      logoPublicId,
       color: "#4f46e5",
       createdByUserId: user.id,
     });
