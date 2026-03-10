@@ -654,7 +654,7 @@ export function AdminPage({
         <div className="flex-1">
           <header className="border-b border-border bg-white px-4 py-4 md:px-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
+              <div className="flex min-w-0 items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setSidebarOpen(true)}
@@ -670,12 +670,12 @@ export function AdminPage({
                     <Building2 className="h-5 w-5 text-[#56cdad]" />
                   )}
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="font-epilogue text-sm text-muted">Company</p>
                   <button
                     type="button"
                     onClick={() => navigateTo("dashboard")}
-                    className="text-left font-clash text-[32px] font-semibold leading-none hover:opacity-90"
+                    className="max-w-[62vw] truncate text-left font-clash text-[24px] font-semibold leading-none hover:opacity-90 sm:max-w-none sm:text-[32px]"
                   >
                     {company?.name || currentUser.company}
                   </button>
@@ -686,13 +686,13 @@ export function AdminPage({
                 <button type="button" className="flex h-12 w-12 items-center justify-center rounded-2xl border border-border text-[#7c8493]">
                   <Bell className="h-4 w-4" />
                 </button>
-                <button type="button" onClick={logout} className="inline-flex items-center gap-2 rounded-2xl border border-border px-5 py-3 font-epilogue text-sm font-semibold text-ink">
+                <button type="button" onClick={logout} className="inline-flex items-center gap-2 rounded-2xl border border-border px-4 py-3 font-epilogue text-sm font-semibold text-ink sm:px-5">
                   <LogOut className="h-4 w-4" />
-                  Logout
+                  <span className="hidden sm:inline">Logout</span>
                 </button>
-                <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-2xl bg-brand px-5 py-3 font-epilogue text-sm font-semibold text-white">
+                <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-2xl bg-brand px-4 py-3 font-epilogue text-sm font-semibold text-white sm:px-5">
                   <Plus className="h-4 w-4" />
-                  Post a job
+                  <span className="hidden sm:inline">Post a job</span>
                 </button>
               </div>
             </div>
@@ -704,8 +704,8 @@ export function AdminPage({
               <div className="space-y-5">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
-                    <h1 className="font-clash text-[30px] font-semibold tracking-[-0.02em]">Good morning, {currentUser.name.split(" ")[0].toUpperCase()}</h1>
-                    <p className="mt-2 max-w-3xl font-epilogue text-[18px] leading-8 text-muted">Here is your job listing statistic report for {companyName}.</p>
+                    <h1 className="font-clash text-[24px] font-semibold tracking-[-0.02em] sm:text-[30px]">Good morning, {currentUser.name.split(" ")[0].toUpperCase()}</h1>
+                    <p className="mt-2 max-w-3xl font-epilogue text-[16px] leading-7 text-muted sm:text-[18px] sm:leading-8">Here is your job listing statistic report for {companyName}.</p>
                   </div>
                 </div>
 
@@ -716,33 +716,33 @@ export function AdminPage({
                 </div>
 
                 <div className="grid gap-4 xl:grid-cols-[minmax(0,1.7fr)_320px]">
-                  <div className="rounded-[24px] border border-border bg-white p-6">
+                  <div className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                     <div className="flex flex-wrap items-start justify-between gap-4">
                       <div>
                         <h2 className="font-clash text-[30px] font-semibold">Job statistics</h2>
                         <p className="mt-2 font-epilogue text-base text-muted">Showing activity from your live listings</p>
                       </div>
                       <div className="flex flex-wrap items-center justify-end gap-3">
-                        <div className="rounded-xl border border-border bg-white px-4 py-2 font-epilogue text-sm font-semibold text-muted">
+                        <div className="rounded-xl border border-border bg-white px-3 py-2 font-epilogue text-xs font-semibold text-muted sm:px-4 sm:text-sm">
                           {formatDateRange(statsWindow)}
                         </div>
                         <div className="inline-flex rounded-2xl bg-[#f7f7fd] p-1">
                           {(["week", "month", "year"] as const).map((item) => (
-                            <button key={item} type="button" onClick={() => setStatsView(item)} className={`rounded-xl px-4 py-2 font-epilogue text-sm font-semibold capitalize ${statsView === item ? "bg-white text-brand shadow-sm" : "text-[#7c8493]"}`}>{item}</button>
+                            <button key={item} type="button" onClick={() => setStatsView(item)} className={`rounded-xl px-3 py-2 font-epilogue text-xs font-semibold capitalize sm:px-4 sm:text-sm ${statsView === item ? "bg-white text-brand shadow-sm" : "text-[#7c8493]"}`}>{item}</button>
                           ))}
                         </div>
                       </div>
                     </div>
 
                     <div className="mt-6 rounded-[20px] border border-border p-4">
-                      <div className="flex h-[250px] items-end gap-4">
+                      <div className="flex h-[250px] items-end gap-2 sm:gap-4">
                         {statSeries.map((item) => (
-                          <div key={item.label} className="flex flex-1 flex-col items-center gap-3">
-                            <div className="flex h-[180px] items-end gap-[6px]">
-                              <div className="w-10 rounded-t-lg bg-[#f4b63a]" style={{ height: `${item.views ? Math.max(24, Math.round((item.views / statMax.views) * 180)) : 8}px` }} />
-                              <div className="w-10 rounded-t-lg bg-[#7a5af8]" style={{ height: `${item.applied ? Math.max(24, Math.round((item.applied / statMax.applied) * 180)) : 8}px` }} />
+                          <div key={item.label} className="flex flex-1 flex-col items-center gap-2">
+                            <div className="flex h-[180px] items-end gap-1 sm:gap-[6px]">
+                              <div className="w-4 rounded-t-lg bg-[#f4b63a] sm:w-8" style={{ height: `${item.views ? Math.max(24, Math.round((item.views / statMax.views) * 180)) : 8}px` }} />
+                              <div className="w-4 rounded-t-lg bg-[#7a5af8] sm:w-8" style={{ height: `${item.applied ? Math.max(24, Math.round((item.applied / statMax.applied) * 180)) : 8}px` }} />
                             </div>
-                            <span className="font-epilogue text-sm text-muted">{item.label}</span>
+                            <span className="font-epilogue text-xs text-muted sm:text-sm">{item.label}</span>
                           </div>
                         ))}
                       </div>
@@ -754,15 +754,15 @@ export function AdminPage({
                   </div>
 
                   <div className="space-y-4">
-                    <div className="rounded-[24px] border border-border bg-white p-6"><p className="font-clash text-[24px] font-semibold">Job Open</p><div className="mt-4 font-clash text-[72px] font-semibold leading-none">{stats.totalJobs}</div><p className="mt-4 font-epilogue text-base text-muted">Jobs opened</p></div>
-                    <div className="rounded-[24px] border border-border bg-white p-6"><p className="font-clash text-[24px] font-semibold">Applicant Summary</p><div className="mt-4 flex items-end gap-3"><span className="font-clash text-[72px] font-semibold leading-none">{stats.applications}</span><span className="mb-2 font-epilogue text-base text-muted">Applications</span></div><div className="mt-4 flex h-3 overflow-hidden rounded-full bg-[#eef1f7]">{Object.entries(stats.employmentCounts).slice(0, 4).map(([type, count], index) => <div key={type} className={index === 0 ? "bg-[#7a5af8]" : index === 1 ? "bg-[#56cdad]" : index === 2 ? "bg-[#26a4ff]" : "bg-[#f4b63a]"} style={{ width: `${(count / Math.max(jobs.length, 1)) * 100}%` }} />)}</div><div className="mt-4 space-y-2">{Object.entries(stats.employmentCounts).map(([type, count]) => <div key={type} className="flex items-center justify-between font-epilogue text-sm text-muted"><span>{type}</span><span>{count}</span></div>)}</div></div>
+                    <div className="rounded-[24px] border border-border bg-white p-4 sm:p-6"><p className="font-clash text-[24px] font-semibold">Job Open</p><div className="mt-4 font-clash text-[56px] font-semibold leading-none sm:text-[72px]">{stats.totalJobs}</div><p className="mt-4 font-epilogue text-base text-muted">Jobs opened</p></div>
+                    <div className="rounded-[24px] border border-border bg-white p-4 sm:p-6"><p className="font-clash text-[24px] font-semibold">Applicant Summary</p><div className="mt-4 flex items-end gap-3"><span className="font-clash text-[56px] font-semibold leading-none sm:text-[72px]">{stats.applications}</span><span className="mb-2 font-epilogue text-base text-muted">Applications</span></div><div className="mt-4 flex h-3 overflow-hidden rounded-full bg-[#eef1f7]">{Object.entries(stats.employmentCounts).slice(0, 4).map(([type, count], index) => <div key={type} className={index === 0 ? "bg-[#7a5af8]" : index === 1 ? "bg-[#56cdad]" : index === 2 ? "bg-[#26a4ff]" : "bg-[#f4b63a]"} style={{ width: `${(count / Math.max(jobs.length, 1)) * 100}%` }} />)}</div><div className="mt-4 space-y-2">{Object.entries(stats.employmentCounts).map(([type, count]) => <div key={type} className="flex items-center justify-between font-epilogue text-sm text-muted"><span>{type}</span><span>{count}</span></div>)}</div></div>
                   </div>
                 </div>
               </div>
             )}
 
             {activeTab === "applicants" && (
-              <section className="rounded-[24px] border border-border bg-white p-6">
+              <section className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                 <div>
                   <h2 className="font-clash text-[34px] font-semibold">All applicants</h2>
                   <p className="mt-2 font-epilogue text-base text-muted">Submitted applications from the public job pages.</p>
@@ -771,9 +771,9 @@ export function AdminPage({
                   {linkedApplications.length ? linkedApplications.map((application) => (
                     <article key={application.id} className="rounded-[20px] border border-border p-5">
                       <div className="flex flex-wrap items-start justify-between gap-4">
-                        <div>
-                          <h3 className="font-clash text-[26px] font-semibold">{application.name}</h3>
-                          <p className="mt-2 font-epilogue text-base text-muted">{application.email}</p>
+                        <div className="min-w-0">
+                          <h3 className="truncate font-clash text-[26px] font-semibold">{application.name}</h3>
+                          <p className="mt-2 break-all font-epilogue text-base text-muted">{application.email}</p>
                           <p className="mt-3 font-epilogue text-sm text-muted">Applied for {application.job?.title || "a removed job"} on {formatShortDate(application.createdAt)}</p>
                         </div>
                         <a href={application.resumeLink} target="_blank" rel="noreferrer" className="inline-flex items-center rounded-2xl border border-brand px-4 py-2 font-epilogue text-sm font-semibold text-brand">View resume</a>
@@ -792,13 +792,13 @@ export function AdminPage({
                       <h2 className="font-clash text-[34px] font-semibold">Current jobs</h2>
                       <p className="mt-2 font-epilogue text-base text-muted">View, edit, and publish the listings belonging to {companyName}.</p>
                     </div>
-                  <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-2xl bg-brand px-5 py-3 font-epilogue text-sm font-semibold text-white">
+                  <button type="button" onClick={openCreate} className="inline-flex items-center gap-2 rounded-2xl bg-brand px-4 py-3 font-epilogue text-sm font-semibold text-white sm:px-5">
                     <Plus className="h-4 w-4" />
-                    Post a job
+                    <span className="hidden sm:inline">Post a job</span>
                   </button>
                 </div>
 
-                <div className="rounded-[24px] border border-border bg-white p-6">
+                <div className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                   <div className="space-y-4">
                     {jobs.length ? jobs.map((job) => (
                       <article key={job.id} className="rounded-[20px] border border-border p-5">
@@ -821,7 +821,7 @@ export function AdminPage({
             )}
 
             {activeTab === "support" && (
-              <section className="rounded-[24px] border border-border bg-white p-6">
+              <section className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <h2 className="font-clash text-[34px] font-semibold">Support</h2>
@@ -843,7 +843,7 @@ export function AdminPage({
                   </div>
                   <div className="rounded-2xl border border-border bg-[#f7f9ff] p-5">
                     <p className="font-epilogue text-sm font-semibold text-ink">Posting jobs</p>
-                    <p className="mt-2 font-epilogue text-sm text-muted">Use "Post a job" to create listings. You can upload a custom logo per listing too.</p>
+                    <p className="mt-2 font-epilogue text-sm text-muted">Use &quot;Post a job&quot; to create listings. You can upload a custom logo per listing too.</p>
                     <button type="button" onClick={() => { navigateTo("jobs"); openCreate(); }} className="mt-4 inline-flex items-center rounded-2xl bg-brand px-4 py-2 font-epilogue text-sm font-semibold text-white">
                       Post a job
                     </button>
@@ -895,7 +895,7 @@ export function AdminPage({
 
                 <div className="space-y-4">
                   {settingsPanel === "security" ? (
-                    <form onSubmit={changePassword} className="rounded-[24px] border border-border bg-white p-6">
+                    <form onSubmit={changePassword} className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                       <h2 className="font-clash text-[34px] font-semibold">Security</h2>
                       <p className="mt-2 font-epilogue text-base text-muted">Enter your current password and new password, then confirm the change with email OTP.</p>
                       <div className="mt-5 rounded-2xl border border-border bg-[#f7f9ff] p-4 font-epilogue text-sm text-muted">
@@ -904,15 +904,15 @@ export function AdminPage({
                       <div className="mt-6 space-y-4">
                         <input type="password" autoComplete="new-password" value={securityForm.currentPassword} onChange={(event) => setSecurityForm((current) => ({ ...current, currentPassword: event.target.value }))} placeholder="Current password" className="h-14 w-full rounded-2xl border border-border bg-[#f7f9ff] px-4 font-epilogue outline-none" />
                         <input type="password" autoComplete="new-password" value={securityForm.newPassword} onChange={(event) => setSecurityForm((current) => ({ ...current, newPassword: event.target.value }))} placeholder="New password" className="h-14 w-full rounded-2xl border border-border bg-[#f7f9ff] px-4 font-epilogue outline-none" />
-                        <div className="flex gap-3">
+                        <div className="flex flex-col gap-3 sm:flex-row">
                           <input value={securityForm.otp} onChange={(event) => setSecurityForm((current) => ({ ...current, otp: event.target.value }))} placeholder="6-digit OTP" className="h-14 min-w-0 flex-1 rounded-2xl border border-border bg-[#f7f9ff] px-4 font-epilogue outline-none" />
-                          <button type="button" onClick={sendOtp} disabled={sendingOtp} className="rounded-2xl border border-brand px-4 py-3 font-epilogue text-sm font-semibold text-brand disabled:opacity-60">{sendingOtp ? "Sending..." : "Send OTP"}</button>
+                          <button type="button" onClick={sendOtp} disabled={sendingOtp} className="w-full rounded-2xl border border-brand px-4 py-3 font-epilogue text-sm font-semibold text-brand disabled:opacity-60 sm:w-auto">{sendingOtp ? "Sending..." : "Send OTP"}</button>
                         </div>
                       </div>
                       <button type="submit" disabled={changingPassword} className="mt-6 rounded-2xl bg-brand px-6 py-3 font-epilogue text-sm font-semibold text-white disabled:opacity-60">{changingPassword ? "Updating..." : "Confirm password change"}</button>
                     </form>
                   ) : (
-                    <section className="rounded-[24px] border border-border bg-white p-6">
+                    <section className="rounded-[24px] border border-border bg-white p-4 sm:p-6">
                       <h2 className="font-clash text-[34px] font-semibold">Help Center</h2>
                       <p className="mt-2 font-epilogue text-base text-muted">Quick answers for managing {companyName} on QuickHire.</p>
 
@@ -923,7 +923,7 @@ export function AdminPage({
                         </div>
                         <div className="rounded-2xl border border-border bg-[#f7f9ff] p-4">
                           <p className="font-epilogue text-sm font-semibold text-ink">Posting jobs</p>
-                          <p className="mt-1 font-epilogue text-sm text-muted">Use "Post a job" to create listings. You can upload a custom job logo per listing too.</p>
+                          <p className="mt-1 font-epilogue text-sm text-muted">Use &quot;Post a job&quot; to create listings. You can upload a custom job logo per listing too.</p>
                         </div>
                         <div className="rounded-2xl border border-border bg-[#f7f9ff] p-4">
                           <p className="font-epilogue text-sm font-semibold text-ink">Applicants</p>
