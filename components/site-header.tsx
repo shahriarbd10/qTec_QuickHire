@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { PendingLink } from "@/components/ui/pending-link";
 import { LogoMark } from "@/components/ui/logo-mark";
 
 export function SiteHeader() {
@@ -12,9 +13,9 @@ export function SiteHeader() {
     <header className="container-shell py-4 lg:py-0">
       <div className="flex items-center justify-between lg:h-[78px]">
         <div className="flex items-center gap-12 lg:gap-12">
-          <Link href="/" className="flex items-center gap-2 font-semibold text-ink">
+          <PendingLink href="/" className="flex items-center gap-2 font-semibold text-ink">
             <LogoMark />
-          </Link>
+          </PendingLink>
           <nav
             className="hidden items-center gap-12 text-[16px] font-medium leading-[1.6] tracking-normal text-[#515b6f] md:flex"
             style={{ fontFamily: '"Epilogue", sans-serif' }}

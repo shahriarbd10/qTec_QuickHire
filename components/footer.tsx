@@ -1,5 +1,6 @@
 import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import Link from "next/link";
+import { PendingLink } from "@/components/ui/pending-link";
 import { LogoMark } from "@/components/ui/logo-mark";
 
 const footerLinkClass =
@@ -12,9 +13,9 @@ export function Footer() {
         <div className="px-5 pt-16 sm:px-8 lg:min-h-[497px] lg:px-[48px] lg:pt-16">
         <div className="grid gap-12 lg:grid-cols-[320px_105px_97px_362px] lg:gap-0 lg:[grid-template-areas:'left_about_resources_right'] lg:[grid-template-columns:320px_105px_97px_362px] lg:justify-between">
           <div className="lg:[grid-area:left]">
-            <Link href="/" className="inline-flex items-center">
+            <PendingLink href="/" className="inline-flex items-center">
               <LogoMark src="/images/footer/logo.png" />
-            </Link>
+            </PendingLink>
             <p
               className="mt-8 max-w-[376px] text-[16px] font-normal leading-[1.6] tracking-normal text-[#d6ddeb]"
               style={{ fontFamily: '"Epilogue", sans-serif' }}
