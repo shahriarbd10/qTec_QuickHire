@@ -10,6 +10,8 @@ import { categories, getJobs, trustedCompanies } from "@/lib/data";
 
 export async function HomePage() {
   const jobs = await getJobs();
+  const locations = [...new Set(jobs.map((job) => job.location))];
+  const defaultLocation = locations[0] ?? "";
   const sortedJobs = [...jobs].sort((left, right) => {
     const diff = new Date(right.createdAt).getTime() - new Date(left.createdAt).getTime();
     if (diff !== 0) return diff;
@@ -77,16 +79,15 @@ export async function HomePage() {
                   <span className="flex w-full flex-col">
                     <select
                       name="location"
-                      defaultValue="Florence, Italy"
+                      defaultValue={defaultLocation}
                       className="w-full appearance-none border-0 bg-transparent pb-2 pr-8 text-[14px] font-medium tracking-snug text-ink outline-none lg:text-[16px] lg:font-normal lg:tracking-normal"
                       style={{ fontFamily: '"Epilogue", sans-serif' }}
                     >
-                      <option>Florence, Italy</option>
-                      <option>Paris, France</option>
-                      <option>San Francisco, USA</option>
-                      <option>Hamburg, Germany</option>
-                      <option>Lucern, Switzerland</option>
-                      <option>Ontario, Canada</option>
+                      {locations.map((location) => (
+                        <option key={location} value={location}>
+                          {location}
+                        </option>
+                      ))}
                     </select>
                     <span className="block h-px w-full bg-[#dfe3ec]" />
                   </span>

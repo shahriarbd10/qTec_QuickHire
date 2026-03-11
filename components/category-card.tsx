@@ -25,7 +25,7 @@ const categoryColors: Record<JobCategory, string> = {
   Technology: "#4f46e5",
   Engineering: "#4f46e5",
   Business: "#4f46e5",
-  "Human Resource": "#2b3654",
+  "Human Resource": "#4f46e5",
 };
 
 export function CategoryCard({
@@ -71,7 +71,7 @@ export function CategoryCard({
         </div>
         <div className="flex flex-1 items-center justify-between gap-4 sm:mt-8 sm:block">
           <div>
-            <h3 className="text-[20px] font-semibold leading-[1.2] tracking-normal sm:text-[24px]">
+            <h3 className="whitespace-nowrap text-[20px] font-semibold leading-[1.2] tracking-normal sm:text-[24px]">
               {name}
             </h3>
             <Link
