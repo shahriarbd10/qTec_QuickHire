@@ -1,12 +1,14 @@
 import Image from "next/image";
-import Link from "next/link";
+import { PendingLink } from "@/components/ui/pending-link";
 import { Job } from "@/lib/types";
 
 export function JobCard({ job }: { job: Job }) {
   return (
-    <Link
+    <PendingLink
       href={`/jobs/${job.id}`}
+      overlay
       className="block h-full min-h-[283px] overflow-hidden border border-[#d6ddeb] bg-white p-6 transition hover:-translate-y-1 hover:shadow-card sm:w-full sm:max-w-[274px]"
+      pendingClassName="shadow-card ring-2 ring-brand/15"
     >
       <div className="flex items-start justify-between gap-6">
         {job.logoUrl ? (
@@ -66,6 +68,6 @@ export function JobCard({ job }: { job: Job }) {
           {job.category}
         </span>
       </div>
-    </Link>
+    </PendingLink>
   );
 }
