@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PendingLink } from "@/components/ui/pending-link";
+import Link from "next/link";
 import { Job } from "@/lib/types";
 
 function getSecondaryTag(job: Job) {
@@ -16,11 +16,9 @@ function getSecondaryTag(job: Job) {
 
 export function LatestJobRow({ job }: { job: Job }) {
   return (
-    <PendingLink
+    <Link
       href={`/jobs/${job.id}`}
-      overlay
       className="flex flex-col gap-5 bg-white px-6 py-6 transition hover:-translate-y-1 hover:shadow-card sm:min-h-[149px] sm:flex-row sm:items-start sm:gap-6 sm:px-10 sm:py-6"
-      pendingClassName="shadow-card ring-2 ring-brand/15"
     >
       {job.logoUrl ? (
         <Image
@@ -73,6 +71,6 @@ export function LatestJobRow({ job }: { job: Job }) {
           </span>
         </div>
       </div>
-    </PendingLink>
+    </Link>
   );
 }

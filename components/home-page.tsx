@@ -6,7 +6,6 @@ import { JobCard } from "@/components/job-card";
 import { LatestJobRow } from "@/components/latest-job-row";
 import { SiteHeader } from "@/components/site-header";
 import { Footer } from "@/components/footer";
-import { PendingLink } from "@/components/ui/pending-link";
 import { categories, getJobs, trustedCompanies } from "@/lib/data";
 
 export async function HomePage() {
@@ -163,18 +162,18 @@ export async function HomePage() {
           <h2 className="section-title">
             Explore by <span>category</span>
           </h2>
-          <PendingLink href="/jobs" className="section-link hidden sm:inline-flex">
+          <Link href="/jobs" className="section-link hidden sm:inline-flex">
             Show all jobs &rarr;
-          </PendingLink>
+          </Link>
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
             <CategoryCard key={category.name} {...category} />
           ))}
         </div>
-        <PendingLink href="/jobs" className="section-link mt-5 sm:hidden">
+        <Link href="/jobs" className="section-link mt-5 sm:hidden">
           Show all jobs &rarr;
-        </PendingLink>
+        </Link>
       </section>
 
       <section className="container-shell py-8 sm:py-12">
@@ -227,9 +226,9 @@ export async function HomePage() {
           <h2 className="section-title">
             Featured <span>jobs</span>
           </h2>
-          <PendingLink href="/jobs" className="section-link hidden sm:inline-flex">
+          <Link href="/jobs" className="section-link hidden sm:inline-flex">
             Show all jobs &rarr;
-          </PendingLink>
+          </Link>
         </div>
         <div className="mt-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pl-4 pr-6 pb-3 [scrollbar-width:none] [-ms-overflow-style:none] sm:hidden [&::-webkit-scrollbar]:hidden">
           {featuredJobs.map((job) => (
@@ -243,9 +242,9 @@ export async function HomePage() {
             <JobCard key={job.id} job={job} />
           ))}
         </div>
-        <PendingLink href="/jobs" className="section-link mt-7 sm:hidden">
+        <Link href="/jobs" className="section-link mt-7 sm:hidden">
           Show all jobs &rarr;
-        </PendingLink>
+        </Link>
       </section>
 
       <section className="bg-white pt-8 sm:pt-16">
@@ -301,18 +300,18 @@ export async function HomePage() {
             <h2 className="section-title">
               Latest <span>jobs open</span>
             </h2>
-            <PendingLink href="/jobs" className="section-link hidden sm:inline-flex">
+            <Link href="/jobs" className="section-link hidden sm:inline-flex">
               Show all jobs &rarr;
-            </PendingLink>
+            </Link>
             </div>
             <div className="mt-10 grid gap-4 xl:grid-cols-2">
             {latestJobs.map((job) => (
               <LatestJobRow key={job.id} job={job} />
             ))}
             </div>
-            <PendingLink href="/jobs" className="section-link mt-5 sm:hidden">
+            <Link href="/jobs" className="section-link mt-5 sm:hidden">
               Show all jobs &rarr;
-            </PendingLink>
+            </Link>
           </div>
         </div>
       </section>
