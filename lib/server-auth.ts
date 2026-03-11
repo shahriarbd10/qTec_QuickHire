@@ -1,3 +1,4 @@
+// Copyright (c) Shahriar Hossain. All rights reserved. Contact: shahriarsgr@gmail.com
 import crypto from "node:crypto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";

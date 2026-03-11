@@ -1,3 +1,4 @@
+// Copyright (c) Shahriar Hossain. All rights reserved. Contact: shahriarsgr@gmail.com
 import { InferSchemaType, Model, Schema, model, models } from "mongoose";
 
 const JobSchema = new Schema(

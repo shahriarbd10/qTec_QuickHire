@@ -1,3 +1,4 @@
+// Copyright (c) Shahriar Hossain. All rights reserved. Contact: shahriarsgr@gmail.com
 /* eslint-disable no-console */
 const fs = require("node:fs");
 const path = require("node:path");

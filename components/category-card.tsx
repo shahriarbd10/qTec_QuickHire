@@ -39,6 +39,7 @@ export function CategoryCard({
 }) {
   const iconSrc = icons[name];
   const accentColor = categoryColors[name];
+  const usesTintedIcon = name === "Human Resource";
 
   return (
     <div
@@ -64,7 +65,9 @@ export function CategoryCard({
               "object-contain opacity-100",
               highlighted
                 ? "brightness-0 invert"
-                : "brightness-100 saturate-100 group-hover:brightness-0 group-hover:invert",
+                : usesTintedIcon
+                  ? "group-hover:brightness-0 group-hover:invert [filter:brightness(0)_saturate(100%)_invert(35%)_sepia(94%)_saturate(1978%)_hue-rotate(233deg)_brightness(92%)_contrast(94%)]"
+                  : "brightness-100 saturate-100 group-hover:brightness-0 group-hover:invert",
             )}
             sizes="40px"
           />

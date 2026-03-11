@@ -1,3 +1,4 @@
+// Copyright (c) Shahriar Hossain. All rights reserved. Contact: shahriarsgr@gmail.com
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, MapPin, Search } from "lucide-react";

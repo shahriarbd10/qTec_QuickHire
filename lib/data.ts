@@ -1,3 +1,4 @@
+// Copyright (c) Shahriar Hossain. All rights reserved. Contact: shahriarsgr@gmail.com
 import { connectToDatabase } from "@/lib/db";
 import { Application, CompanyProfile, Job, JobCategory } from "@/lib/types";
 import { JobModel } from "@/models/job";
