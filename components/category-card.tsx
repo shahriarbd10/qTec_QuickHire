@@ -14,7 +14,7 @@ const icons: Record<JobCategory, string> = {
   Technology: "/icons/categories/icon5.png",
   Engineering: "/icons/categories/icon6.png",
   Business: "/icons/categories/icon7.png",
-  "Human Resource": "/icons/categories/icon8.png",
+  "Human Resource": "/icons/categories/Icon8.png",
 };
 
 const categoryColors: Record<JobCategory, string> = {
@@ -39,7 +39,6 @@ export function CategoryCard({
 }) {
   const iconSrc = icons[name];
   const accentColor = categoryColors[name];
-  const usesTintedIcon = name === "Human Resource";
 
   return (
     <div
@@ -61,14 +60,7 @@ export function CategoryCard({
             src={iconSrc}
             alt={name}
             fill
-            className={cn(
-              "object-contain opacity-100",
-              highlighted
-                ? "brightness-0 invert"
-                : usesTintedIcon
-                  ? "group-hover:brightness-0 group-hover:invert [filter:brightness(0)_saturate(100%)_invert(35%)_sepia(94%)_saturate(1978%)_hue-rotate(233deg)_brightness(92%)_contrast(94%)]"
-                  : "brightness-100 saturate-100 group-hover:brightness-0 group-hover:invert",
-            )}
+            className="object-contain opacity-100"
             sizes="40px"
           />
         </div>
