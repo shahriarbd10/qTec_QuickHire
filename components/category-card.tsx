@@ -14,7 +14,7 @@ const icons: Record<JobCategory, string> = {
   Technology: "/icons/categories/icon5.png",
   Engineering: "/icons/categories/icon6.png",
   Business: "/icons/categories/icon7.png",
-  "Human Resource": "/icons/categories/Icon8.png",
+  "Human Resource": "/icons/categories/icon8.png",
 };
 
 const categoryColors: Record<JobCategory, string> = {
@@ -100,3 +100,4 @@ export function CategoryCard({
     </div>
   );
 }
+
