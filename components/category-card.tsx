@@ -60,7 +60,12 @@ export function CategoryCard({
             src={iconSrc}
             alt={name}
             fill
-            className="object-contain opacity-100"
+            className={cn(
+              "object-contain opacity-100",
+              highlighted
+                ? "brightness-0 invert"
+                : "brightness-100 saturate-100 group-hover:brightness-0 group-hover:invert",
+            )}
             sizes="40px"
           />
         </div>
